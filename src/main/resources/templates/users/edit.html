@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>springboot-sample</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>Edit User</h1>
+    <form th:action="@{/users-dev/{id}/update(id=${user.id})}" method="post">
+      <label>Name</label>
+      <input type="text" name="name" th:value="${user.name}" />
+      <label>Age</label>
+      <input type="text" name="age" th:value="${user.age}" />
+      <button type="submit">Submit</button>
+    </form>
+    <a href="/users-dev">Back</a>
+  </body>
+</html>

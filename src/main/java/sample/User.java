@@ -3,6 +3,7 @@ package sample;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.List;
 
 @Entity
 public class User {
@@ -23,6 +24,10 @@ public class User {
         return this.id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -37,5 +42,19 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String toString() {
+        return "{id: " + this.getId() + ", name: " + this.getName() + ", age: " + this.getAge() + "}";
+    }
+
+    public static String toString(List<User> users) {
+        String result = "[";
+        for(User u : users) {
+            result += "{id: " + u.getId() + ", name: " + u.getName() + ", age: " + u.getAge() + "}, ";
+        }
+        result = result.substring(0, result.length() - 2);
+        result += "]";
+        return result;
     }
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>springboot-sample</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>Listing Users</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="user : ${users}">
+          <td th:text="${user.id}"></td>
+          <td th:text="${user.name}"></td>
+          <td th:text="${user.age}"></td>
+          <td><a th:href="@{/users-dev/{id}/edit(id=${user.id})}">Edit</a></td>
+          <td><a th:href="@{/users-dev/{id}(id=${user.id})}">Show</a></td>
+          <td><a th:href="@{/users-dev/{id}/delete(id=${user.id})}">Destroy</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <a href="/users-dev/new">New</a>
+  </body>
+</html>

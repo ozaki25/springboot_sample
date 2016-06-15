@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>springboot-sample</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>Show User</h1>
+    <p th:inline="text">ID: [[${user.id}]], Name: [[${user.name}]], Age: [[${user.age}]]</p>
+    <a th:href="@{/users-dev/{id}/edit(id=${user.id})}">Edit</a>
+    <a th:href="@{/users-dev/{id}/delete(id=${user.id})}">Destroy</a>
+    <a href="/users-dev">Back</a>
+  </body>
+</html>
