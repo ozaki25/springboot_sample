@@ -10,14 +10,20 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
+    private String uid;
     private String name;
-    private int age;
+    private String team;
+    private int jobLevel;
+    private boolean admin;
 
     public User() { };
 
-    public User(String name, int age) {
+    public User(String uid, String name, String team, int jobLevel, boolean admin) {
+        this.uid = uid;
         this.name = name;
-        this.age = age;
+        this.team = team;
+        this.jobLevel = jobLevel;
+        this.admin = admin;
     }
 
     public Long getId() {
@@ -28,6 +34,14 @@ public class User {
         this.id = id;
     }
 
+    public String getUid() {
+        return this.name;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -36,22 +50,38 @@ public class User {
         this.name = name;
     }
 
-    public int getAge() {
-        return this.age;
+    public String getTeam() {
+        return this.team;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
+    public int getJobLevel() {
+        return this.jobLevel;
+    }
+
+    public void setJobLevel(int jobLevel) {
+        this.jobLevel = jobLevel;
+    }
+
+    public boolean getAdmin() {
+        return this.admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", name: " + this.getName() + ", age: " + this.getAge() + "}";
+        return "{id: " + this.getId() + ", uid: " + this.getUid() + ", name: " + this.getName() + ", team: " + this.getTeam() + ", jobLevel: " + this.getJobLevel() + ", admin: " + this.getAdmin() + "}";
     }
 
     public static String toString(List<User> users) {
         String result = "[";
         for(User u : users) {
-            result += "{id: " + u.getId() + ", name: " + u.getName() + ", age: " + u.getAge() + "}, ";
+            result += "{id: " + u.getId() + ", uid: " + u.getUid() + ", name: " + u.getName() + ", team: " + u.getTeam() + ", jobLevel: " + u.getJobLevel() + ", admin: " + u.getAdmin() + "}, ";
         }
         result = result.substring(0, result.length() - 2);
         result += "]";

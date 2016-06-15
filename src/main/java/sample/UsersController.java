@@ -1,6 +1,7 @@
 package sample;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +17,16 @@ public class UsersController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<User> index() {
-        User user = new User("ozaki", 25);
-        repository.save(user);
         List<User> users = repository.findAll();
         System.out.println(User.toString(users));
         return users;
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public User show(@PathVariable Long id) {
+        User u = repository.findById(id);
+        System.out.println(u.toString());
+        return u;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -30,10 +36,19 @@ public class UsersController {
         return u;
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public User show(@PathVariable Long id) {
-        User user = repository.findById(id);
-        System.out.println(user.toString());
-        return user;
+    @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
+    public User update(@PathVariable Long id, @ModelAttribute User user) {
+        user.setId(id);
+        User u = repository.save(user);
+        System.out.println(u.toString());
+        return u;
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public User delete(@PathVariable Long id){
+        User u = repository.findById(id);
+        System.out.println(u.toString());
+        repository.delete(id);
+        return u;
     }
 }

@@ -10,8 +10,11 @@
       <thead>
         <tr>
           <th>ID</th>
+          <th>Uid</th>
           <th>Name</th>
-          <th>Age</th>
+          <th>Team</th>
+          <th>JobLevel</th>
+          <th>Admin</th>
           <th></th>
           <th></th>
           <th></th>
@@ -20,8 +23,11 @@
       <tbody>
         <tr th:each="user : ${users}">
           <td th:text="${user.id}"></td>
+          <td th:text="${user.uid}"></td>
           <td th:text="${user.name}"></td>
-          <td th:text="${user.age}"></td>
+          <td th:text="${user.team}"></td>
+          <td th:text="${user.jobLevel}"></td>
+          <td th:text="${user.admin}"></td>
           <td><a th:href="@{/users-dev/{id}/edit(id=${user.id})}">Edit</a></td>
           <td><a th:href="@{/users-dev/{id}(id=${user.id})}">Show</a></td>
           <td><a th:href="@{/users-dev/{id}/delete(id=${user.id})}">Destroy</a></td>

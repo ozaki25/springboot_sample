@@ -6,9 +6,14 @@
   </head>
   <body>
     <h1>Show User</h1>
-    <p th:inline="text">ID: [[${user.id}]], Name: [[${user.name}]], Age: [[${user.age}]]</p>
+    <div th:inline="text">ID: [[${user.id}]]</div>
+    <div th:inline="text">Uid: [[${user.uid}]]</div>
+    <div th:inline="text">Name: [[${user.name}]]</div>
+    <div th:inline="text">Team: [[${user.team}]]</div>
+    <div th:inline="text">JobLevel: [[${user.jobLevel}]]</div>
+    <div th:inline="text">Admin: [[${user.admin}]]</div>
+    <a href="/users-dev">Back</a>
     <a th:href="@{/users-dev/{id}/edit(id=${user.id})}">Edit</a>
     <a th:href="@{/users-dev/{id}/delete(id=${user.id})}">Destroy</a>
-    <a href="/users-dev">Back</a>
   </body>
 </html>
