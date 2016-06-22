@@ -2,7 +2,6 @@ package sample;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +38,7 @@ public class StatusesController {
     }
 
     @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
-    public Status update(@PathVariable Long id, @ModelAttribute Status status) {
+    public Status update(@PathVariable Long id, @RequestBody Status status) {
         status.setId(id);
         Status s = repository.save(status);
         System.out.println(s.toString());

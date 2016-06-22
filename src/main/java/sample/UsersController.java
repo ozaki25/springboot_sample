@@ -2,7 +2,6 @@ package sample;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +38,7 @@ public class UsersController {
     }
 
     @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
-    public User update(@PathVariable Long id, @ModelAttribute User user) {
+    public User update(@PathVariable Long id, @RequestBody User user) {
         user.setId(id);
         User u = repository.save(user);
         System.out.println(u.toString());
