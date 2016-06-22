@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>springboot-sample</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>Edit Request</h1>
+    <form th:action="@{/requests-dev/{id}/update(id=${request.id})}" method="post">
+      <p>
+        <label>Title:</label>
+        <input type="text" name="title" th:value="${request.title}" />
+      </p>
+      <p>
+        <label>Content:</label>
+        <textarea name="team" th:value="${request.content}"></textarea>
+      </p>
+      <p>
+        <label>Status:</label>
+        <input type="text" name="uid" th:value="${request.status}" />
+      </p>
+      <p>
+        <label>User:</label>
+        <select name="user">
+          <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}" th:selected="${request.user.id} == ${user.id}"></option>
+        </select>
+      </p>
+      <button type="submit">Submit</button>
+    </form>
+    <a href="/requests-dev">Back</a>
+  </body>
+</html>

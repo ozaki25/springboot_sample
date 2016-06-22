@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>springboot-sample</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>Listing Requests</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Content</th>
+          <th>Status</th>
+          <th>User Name</th>
+          <th>User Team</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="request : ${requests}">
+          <td th:text="${request.id}"></td>
+          <td th:text="${request.title}"></td>
+          <td th:text="${request.content}"></td>
+          <td th:text="${request.status}"></td>
+          <td th:text="${request.user.name}"></td>
+          <td th:text="${request.user.team}"></td>
+          <td><a th:href="@{/requests-dev/{id}/edit(id=${request.id})}">Edit</a></td>
+          <td><a th:href="@{/requests-dev/{id}(id=${request.id})}">Show</a></td>
+          <td><a th:href="@{/requests-dev/{id}/delete(id=${request.id})}">Destroy</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <a href="/requests-dev/new">New</a>
+  </body>
+</html>

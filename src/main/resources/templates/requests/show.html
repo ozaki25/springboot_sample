@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>springboot-sample</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>Show Request</h1>
+    <div th:inline="text">ID: [[${request.id}]]</div>
+    <div th:inline="text">Title: [[${request.title}]]</div>
+    <div th:inline="text">Content: [[${request.content}]]</div>
+    <div th:inline="text">Status: [[${request.status}]]</div>
+    <div th:inline="text">User Name: [[${request.user.name}]]</div>
+    <div th:inline="text">User Team: [[${request.user.team}]]</div>
+    <a href="/requests-dev">Back</a>
+    <a th:href="@{/requests-dev/{id}/edit(id=${request.id})}">Edit</a>
+    <a th:href="@{/requests-dev/{id}/delete(id=${request.id})}">Destroy</a>
+  </body>
+</html>
