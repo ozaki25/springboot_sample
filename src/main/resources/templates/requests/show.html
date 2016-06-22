@@ -9,7 +9,7 @@
     <div th:inline="text">ID: [[${request.id}]]</div>
     <div th:inline="text">Title: [[${request.title}]]</div>
     <div th:inline="text">Content: [[${request.content}]]</div>
-    <div th:inline="text">Status: [[${request.status}]]</div>
+    <div th:inline="text">Status: [[${request.status.name}]]</div>
     <div th:inline="text">User Name: [[${request.user.name}]]</div>
     <div th:inline="text">User Team: [[${request.user.team}]]</div>
     <a href="/requests-dev">Back</a>

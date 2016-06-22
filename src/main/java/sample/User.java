@@ -1,8 +1,10 @@
 package sample;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
@@ -15,6 +17,8 @@ public class User {
     private String team;
     private int jobLevel;
     private boolean admin;
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "user")
+    private List<Request> requests;
 
     public User() { };
 
@@ -79,6 +83,7 @@ public class User {
     }
 
     public static String toString(List<User> users) {
+        if(users.size() == 0) return "User is Empty.";
         String result = "[";
         for(User u : users) {
             result += "{id: " + u.getId() + ", uid: " + u.getUid() + ", name: " + u.getName() + ", team: " + u.getTeam() + ", jobLevel: " + u.getJobLevel() + ", admin: " + u.getAdmin() + "}, ";

@@ -25,7 +25,7 @@
           <td th:text="${request.id}"></td>
           <td th:text="${request.title}"></td>
           <td th:text="${request.content}"></td>
-          <td th:text="${request.status}"></td>
+          <td th:text="${request.status.name}"></td>
           <td th:text="${request.user.name}"></td>
           <td th:text="${request.user.team}"></td>
           <td><a th:href="@{/requests-dev/{id}/edit(id=${request.id})}">Edit</a></td>

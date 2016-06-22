@@ -13,11 +13,13 @@
       </p>
       <p>
         <label>Content:</label>
-        <textarea name="team"></textarea>
+        <textarea name="content"></textarea>
       </p>
       <p>
         <label>Status:</label>
-        <input type="text" name="status" />
+        <select name="status">
+          <option th:each="status : ${statuses}" th:value="${status.id}" th:text="${status.name}"></option>
+        </select>
       </p>
       <p>
         <label>User:</label>
