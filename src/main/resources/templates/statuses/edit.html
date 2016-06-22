@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>springboot-sample</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>Edit Status</h1>
+    <form th:action="@{/statuses-dev/{id}/update(id=${status.id})}" method="post">
+      <p>
+        <label>Code:</label>
+        <input type="number" name="code" th:value="${status.code}" />
+      </p>
+      <p>
+        <label>Name:</label>
+        <input type="text" name="name" th:value="${status.name}" />
+      </p>
+      <button type="submit">Submit</button>
+    </form>
+    <a href="/statuses-dev">Back</a>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>springboot-sample</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>Show Status</h1>
+    <div th:inline="text">ID: [[${status.id}]]</div>
+    <div th:inline="text">Code: [[${status.code}]]</div>
+    <div th:inline="text">Name: [[${status.name}]]</div>
+    <a href="/statuses-dev">Back</a>
+    <a th:href="@{/statuses-dev/{id}/edit(id=${status.id})}">Edit</a>
+    <a th:href="@{/statuses-dev/{id}/delete(id=${status.id})}">Destroy</a>
+  </body>
+</html>
