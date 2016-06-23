@@ -1,5 +1,7 @@
 package sample;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,27 +15,28 @@ import java.util.List;
 @RestController
 @RequestMapping("/statuses")
 public class StatusesController {
+    private final Log logger = LogFactory.getLog(StatusesController.class);
     @Autowired
     private StatusRepository repository;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Status> index() {
         List<Status> statuses = repository.findAll();
-        System.out.println(Status.toString(statuses));
+        logger.info(Status.toString(statuses));
         return statuses;
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Status show(@PathVariable Long id) {
         Status s = repository.findById(id);
-        System.out.println(s.toString());
+        logger.info(s.toString());
         return s;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public Status create(@RequestBody Status status) {
         Status s = repository.save(status);
-        System.out.println(s.toString());
+        logger.info(s.toString());
         return s;
     }
 
@@ -41,14 +44,14 @@ public class StatusesController {
     public Status update(@PathVariable Long id, @RequestBody Status status) {
         status.setId(id);
         Status s = repository.save(status);
-        System.out.println(s.toString());
+        logger.info(s.toString());
         return s;
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public Status delete(@PathVariable Long id){
         Status s = repository.findById(id);
-        System.out.println(s.toString());
+        logger.info(s.toString());
         repository.delete(id);
         return s;
     }

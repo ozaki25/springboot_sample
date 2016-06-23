@@ -1,5 +1,7 @@
 package sample;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,27 +15,28 @@ import java.util.List;
 @RestController
 @RequestMapping("/requests")
 public class RequestsController {
+    private final Log logger = LogFactory.getLog(RequestsController.class);
     @Autowired
     private RequestRepository repository;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Request> index() {
         List<Request> requests = repository.findAll();
-        System.out.println(Request.toString(requests));
+        logger.info(Request.toString(requests));
         return requests;
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Request show(@PathVariable Long id) {
         Request r = repository.findById(id);
-        System.out.println(r.toString());
+        logger.info(r.toString());
         return r;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public Request create(@RequestBody Request request) {
         Request r = repository.save(request);
-        System.out.println(r.toString());
+        logger.info(r.toString());
         return r;
     }
 
@@ -41,14 +44,14 @@ public class RequestsController {
     public Request update(@PathVariable Long id, @RequestBody Request request) {
         request.setId(id);
         Request r = repository.save(request);
-        System.out.println(r.toString());
+        logger.info(r.toString());
         return r;
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public Request delete(@PathVariable Long id){
         Request r = repository.findById(id);
-        System.out.println(r.toString());
+        logger.info(r.toString());
         repository.delete(id);
         return r;
     }
