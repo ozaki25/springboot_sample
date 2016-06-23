@@ -1,4 +1,4 @@
-package sample;
+package com.example.workflow;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;

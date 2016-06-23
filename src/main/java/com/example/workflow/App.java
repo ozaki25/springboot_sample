@@ -1,4 +1,4 @@
-package sample;
+package com.example.workflow;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

@@ -1,4 +1,4 @@
-package sample;
+package com.example.workflow;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
