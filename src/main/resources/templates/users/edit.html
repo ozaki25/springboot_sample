@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1>Edit User</h1>
-    <form th:action="@{/users-dev/{id}/update(id=${user.id})}" method="post">
+    <form th:action="@{/users-test/{id}/update(id=${user.id})}" method="post">
       <p>
         <label>Uid:</label>
         <input type="text" name="uid" th:value="${user.uid}" />
@@ -38,6 +38,6 @@
       </p>
       <button type="submit">Submit</button>
     </form>
-    <a href="/users-dev">Back</a>
+    <a href="/users-test">Back</a>
   </body>
 </html>

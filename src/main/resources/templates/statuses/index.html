@@ -22,12 +22,12 @@
           <td th:text="${status.id}"></td>
           <td th:text="${status.code}"></td>
           <td th:text="${status.name}"></td>
-          <td><a th:href="@{/statuses-dev/{id}/edit(id=${status.id})}">Edit</a></td>
-          <td><a th:href="@{/statuses-dev/{id}(id=${status.id})}">Show</a></td>
-          <td><a th:href="@{/statuses-dev/{id}/delete(id=${status.id})}">Destroy</a></td>
+          <td><a th:href="@{/statuses-test/{id}/edit(id=${status.id})}">Edit</a></td>
+          <td><a th:href="@{/statuses-test/{id}(id=${status.id})}">Show</a></td>
+          <td><a th:href="@{/statuses-test/{id}/delete(id=${status.id})}">Destroy</a></td>
         </tr>
       </tbody>
     </table>
-    <a href="/statuses-dev/new">New</a>
+    <a href="/statuses-test/new">New</a>
   </body>
 </html>

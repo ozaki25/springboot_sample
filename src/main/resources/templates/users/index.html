@@ -28,12 +28,12 @@
           <td th:text="${user.team}"></td>
           <td th:text="${user.jobLevel}"></td>
           <td th:text="${user.admin}"></td>
-          <td><a th:href="@{/users-dev/{id}/edit(id=${user.id})}">Edit</a></td>
-          <td><a th:href="@{/users-dev/{id}(id=${user.id})}">Show</a></td>
-          <td><a th:href="@{/users-dev/{id}/delete(id=${user.id})}">Destroy</a></td>
+          <td><a th:href="@{/users-test/{id}/edit(id=${user.id})}">Edit</a></td>
+          <td><a th:href="@{/users-test/{id}(id=${user.id})}">Show</a></td>
+          <td><a th:href="@{/users-test/{id}/delete(id=${user.id})}">Destroy</a></td>
         </tr>
       </tbody>
     </table>
-    <a href="/users-dev/new">New</a>
+    <a href="/users-test/new">New</a>
   </body>
 </html>

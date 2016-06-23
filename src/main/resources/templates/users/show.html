@@ -12,8 +12,8 @@
     <div th:inline="text">Team: [[${user.team}]]</div>
     <div th:inline="text">JobLevel: [[${user.jobLevel}]]</div>
     <div th:inline="text">Admin: [[${user.admin}]]</div>
-    <a href="/users-dev">Back</a>
-    <a th:href="@{/users-dev/{id}/edit(id=${user.id})}">Edit</a>
-    <a th:href="@{/users-dev/{id}/delete(id=${user.id})}">Destroy</a>
+    <a href="/users-test">Back</a>
+    <a th:href="@{/users-test/{id}/edit(id=${user.id})}">Edit</a>
+    <a th:href="@{/users-test/{id}/delete(id=${user.id})}">Destroy</a>
   </body>
 </html>

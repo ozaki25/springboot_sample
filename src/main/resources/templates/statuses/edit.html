@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1>Edit Status</h1>
-    <form th:action="@{/statuses-dev/{id}/update(id=${status.id})}" method="post">
+    <form th:action="@{/statuses-test/{id}/update(id=${status.id})}" method="post">
       <p>
         <label>Code:</label>
         <input type="number" name="code" th:value="${status.code}" />
@@ -17,6 +17,6 @@
       </p>
       <button type="submit">Submit</button>
     </form>
-    <a href="/statuses-dev">Back</a>
+    <a href="/statuses-test">Back</a>
   </body>
 </html>

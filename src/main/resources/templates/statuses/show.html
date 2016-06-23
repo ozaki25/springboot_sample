@@ -9,8 +9,8 @@
     <div th:inline="text">ID: [[${status.id}]]</div>
     <div th:inline="text">Code: [[${status.code}]]</div>
     <div th:inline="text">Name: [[${status.name}]]</div>
-    <a href="/statuses-dev">Back</a>
-    <a th:href="@{/statuses-dev/{id}/edit(id=${status.id})}">Edit</a>
-    <a th:href="@{/statuses-dev/{id}/delete(id=${status.id})}">Destroy</a>
+    <a href="/statuses-test">Back</a>
+    <a th:href="@{/statuses-test/{id}/edit(id=${status.id})}">Edit</a>
+    <a th:href="@{/statuses-test/{id}/delete(id=${status.id})}">Destroy</a>
   </body>
 </html>

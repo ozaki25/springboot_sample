@@ -12,8 +12,8 @@
     <div th:inline="text">Status: [[${request.status.name}]]</div>
     <div th:inline="text">User Name: [[${request.user.name}]]</div>
     <div th:inline="text">User Team: [[${request.user.team}]]</div>
-    <a href="/requests-dev">Back</a>
-    <a th:href="@{/requests-dev/{id}/edit(id=${request.id})}">Edit</a>
-    <a th:href="@{/requests-dev/{id}/delete(id=${request.id})}">Destroy</a>
+    <a href="/requests-test">Back</a>
+    <a th:href="@{/requests-test/{id}/edit(id=${request.id})}">Edit</a>
+    <a th:href="@{/requests-test/{id}/delete(id=${request.id})}">Destroy</a>
   </body>
 </html>

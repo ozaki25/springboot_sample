@@ -28,12 +28,12 @@
           <td th:text="${request.status.name}"></td>
           <td th:text="${request.user.name}"></td>
           <td th:text="${request.user.team}"></td>
-          <td><a th:href="@{/requests-dev/{id}/edit(id=${request.id})}">Edit</a></td>
-          <td><a th:href="@{/requests-dev/{id}(id=${request.id})}">Show</a></td>
-          <td><a th:href="@{/requests-dev/{id}/delete(id=${request.id})}">Destroy</a></td>
+          <td><a th:href="@{/requests-test/{id}/edit(id=${request.id})}">Edit</a></td>
+          <td><a th:href="@{/requests-test/{id}(id=${request.id})}">Show</a></td>
+          <td><a th:href="@{/requests-test/{id}/delete(id=${request.id})}">Destroy</a></td>
         </tr>
       </tbody>
     </table>
-    <a href="/requests-dev/new">New</a>
+    <a href="/requests-test/new">New</a>
   </body>
 </html>

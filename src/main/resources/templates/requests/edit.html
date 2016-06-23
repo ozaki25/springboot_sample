@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1>Edit Request</h1>
-    <form th:action="@{/requests-dev/{id}/update(id=${request.id})}" method="post">
+    <form th:action="@{/requests-test/{id}/update(id=${request.id})}" method="post">
       <p>
         <label>Title:</label>
         <input type="text" name="title" th:value="${request.title}" />
@@ -29,6 +29,6 @@
       </p>
       <button type="submit">Submit</button>
     </form>
-    <a href="/requests-dev">Back</a>
+    <a href="/requests-test">Back</a>
   </body>
 </html>
