@@ -41,19 +41,19 @@ public class StatusesConfirmController {
     @RequestMapping(method = RequestMethod.POST)
     public String create(@ModelAttribute Status status) {
         repository.save(status);
-        return "redirect:/statuses-dev";
+        return "redirect:/statuses-test";
     }
 
     @RequestMapping(value = "{id}/update", method = RequestMethod.POST)
     public String update(@PathVariable Long id, @ModelAttribute Status status) {
         status.setId(id);
         repository.save(status);
-        return "redirect:/statuses-dev";
+        return "redirect:/statuses-test";
     }
 
     @RequestMapping(value = "{id}/delete", method = RequestMethod.GET)
     public String delete(@PathVariable Long id){
         repository.delete(id);
-        return "redirect:/statuses-dev";
+        return "redirect:/statuses-test";
     }
 }

@@ -41,19 +41,19 @@ public class UsersConfirmController {
     @RequestMapping(method = RequestMethod.POST)
     public String create(@ModelAttribute User user) {
         repository.save(user);
-        return "redirect:/users-dev";
+        return "redirect:/users-test";
     }
 
     @RequestMapping(value = "{id}/update", method = RequestMethod.POST)
     public String update(@PathVariable Long id, @ModelAttribute User user) {
         user.setId(id);
         repository.save(user);
-        return "redirect:/users-dev";
+        return "redirect:/users-test";
     }
 
     @RequestMapping(value = "{id}/delete", method = RequestMethod.GET)
     public String delete(@PathVariable Long id){
         repository.delete(id);
-        return "redirect:/users-dev";
+        return "redirect:/users-test";
     }
 }

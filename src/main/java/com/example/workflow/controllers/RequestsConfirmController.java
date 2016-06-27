@@ -49,19 +49,19 @@ public class RequestsConfirmController {
     @RequestMapping(method = RequestMethod.POST)
     public String create(@ModelAttribute Request request) {
         requestRepository.save(request);
-        return "redirect:/requests-dev";
+        return "redirect:/requests-test";
     }
 
     @RequestMapping(value = "{id}/update", method = RequestMethod.POST)
     public String update(@PathVariable Long id, @ModelAttribute Request request) {
         request.setId(id);
         requestRepository.save(request);
-        return "redirect:/requests-dev";
+        return "redirect:/requests-test";
     }
 
     @RequestMapping(value = "{id}/delete", method = RequestMethod.GET)
     public String delete(@PathVariable Long id){
         requestRepository.delete(id);
-        return "redirect:/requests-dev";
+        return "redirect:/requests-test";
     }
 }
