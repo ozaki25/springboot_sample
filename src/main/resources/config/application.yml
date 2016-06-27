@@ -1,1 +1,2 @@
 logging.path: "log/"
+spring.thymeleaf.cache: false
