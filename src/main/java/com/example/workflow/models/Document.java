@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ public class Document {
     private String filename;
     @Lob
     private byte[] file;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Request request;
 
     public Document() { };
@@ -23,6 +24,12 @@ public class Document {
     public Document(String filename, byte[] file) {
         this.filename = filename;
         this.file = file;
+    }
+
+    public Document(String filename, byte[] file, Request request) {
+        this.filename = filename;
+        this.file = file;
+        this.request = request;
     }
 
     public Long getId() {
@@ -41,7 +48,8 @@ public class Document {
         this.filename = filename;
     }
 
-    public byte[] getFile() {
+    // publicだとjson返す時に無限ループする
+    protected byte[] getFile() {
         return this.file;
     }
 
@@ -49,7 +57,8 @@ public class Document {
         this.file = file;
     }
 
-    public Request getRequest() {
+    // publicだとjson返す時に無限ループする
+    protected Request getRequest() {
         return this.request;
     }
 
@@ -58,17 +67,21 @@ public class Document {
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", filename: " + this.getFilename() + ", request: " + this.getRequest().toString() + "}";
+        return "{id: " + this.getId() + ", filename: " + this.getFilename() + ", request: " + this.getRequestId() + "}";
     }
 
     public static String toString(List<Document> documents) {
         if(documents.size() == 0) return "Document is Empty.";
         String result = "[";
         for(Document d : documents) {
-            result += "{id: " + d.getId() + ", filename: " + d.getFilename() + ", request: " + d.getRequest().toString() + "}, ";
+            result += d.toString() + ", ";
         }
         result = result.substring(0, result.length() - 2);
         result += "]";
         return result;
+    }
+
+    private String getRequestId() {
+        return this.request == null ? "" : this.request.getId().toString();
     }
 }

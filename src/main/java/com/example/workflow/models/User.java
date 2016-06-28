@@ -86,7 +86,7 @@ public class User {
         if(users.size() == 0) return "User is Empty.";
         String result = "[";
         for(User u : users) {
-            result += "{id: " + u.getId() + ", uid: " + u.getUid() + ", name: " + u.getName() + ", team: " + u.getTeam() + ", jobLevel: " + u.getJobLevel() + ", admin: " + u.getAdmin() + "}, ";
+            result += u.toString() + ", ";
         }
         result = result.substring(0, result.length() - 2);
         result += "]";

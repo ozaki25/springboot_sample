@@ -17,11 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping("/documents")
+@RequestMapping("/requests/{requestId}/documents")
 public class DocumentsController {
     private final Log logger = LogFactory.getLog(DocumentsController.class);
     @Autowired
     private DocumentRepository repository;
+    @Autowired
+    private RequestRepository requestRepository;
 
     @RequestMapping(value = "{id}", method=RequestMethod.GET)
     public ResponseEntity<byte[]> show(@PathVariable Long id) throws IOException {
@@ -36,8 +38,9 @@ public class DocumentsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Document create(@RequestParam("file") MultipartFile file) throws IOException {
-        Document document = new Document(file.getOriginalFilename(), file.getBytes());
+    public Document create(@PathVariable Long requestId, @RequestParam("file") MultipartFile file) throws IOException {
+        Request request = requestRepository.findById(requestId);
+        Document document = new Document(file.getOriginalFilename(), file.getBytes(), request);
         Document d = repository.save(document);
         logger.info(d.toString());
         return d;

@@ -1,9 +1,12 @@
 package com.example.workflow;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,6 +20,8 @@ public class Request {
     private Status status;
     @ManyToOne
     private User user;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "request")
+    private List<Document> documents = new ArrayList<Document>();
 
     public Request() { };
 
@@ -67,18 +72,34 @@ public class Request {
         this.user = user;
     }
 
+    public List<Document> getDocuments() {
+        return this.documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
+
     public String toString() {
-        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatus().toString() + ", user: " + this.getUser().toString() + "}";
+        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", user: " + this.getUserToString() + "}";
     }
 
     public static String toString(List<Request> requests) {
         if(requests.size() == 0) return "Request is Empty.";
         String result = "[";
         for(Request r : requests) {
-            result += "{id: " + r.getId() + ", title: " + r.getTitle() + ", content: " + r.getContent() + ", status: " + r.getStatus().toString() + ", user: " + r.getUser().toString() + "}, ";
+            result += r.toString() + ", ";
         }
         result = result.substring(0, result.length() - 2);
         result += "]";
         return result;
+    }
+
+    private String getStatusToString() {
+        return this.status == null ? "" : this.status.toString();
+    }
+
+    private String getUserToString() {
+        return this.user == null ? "" : this.user.toString();
     }
 }

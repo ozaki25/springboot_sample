@@ -56,7 +56,7 @@ public class Status {
         if(statusList.size() == 0) return "Status is Empty.";
         String result = "[";
         for(Status s : statusList) {
-            result += "{id: " + s.getId() + ", code: " + s.getCode() + ", name: " + s.getName() + "}, ";
+            result += s.toString() + ", ";
         }
         result = result.substring(0, result.length() - 2);
         result += "]";
