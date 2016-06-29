@@ -16,7 +16,7 @@ public class Document {
     private String filename;
     @Lob
     private byte[] file;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Request request;
 
     public Document() { };
