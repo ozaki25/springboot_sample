@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>workflow system</title>
+    <link rel="stylesheet" media="screen" href="css/bootstrap.min.css" />
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div id="header"></div>
+    <div class="container">
+      <div class="row">
+        <div id="side_menu" class="col-sm-2"></div>
+        <div id="main" class="col-sm-10"></div>
+      </div>
+    </div>
+
+    <script id="header_view" type="text/template">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar_links">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="#" class="navbar-brand">Workflow System</a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar_links">
+            <ul class="nav navbar-nav pull-right">
+              <li><a href="#">{{= username() }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </script>
+
+    <script id="side_menu_view" type="text/template">
+      <li><a href="#requests">Requests</a></li>
+      <li><a href="#users">Users</a></li>
+      <li><a href="#categories">Categories</a></li>
+      <li><a href="#status_list">StatusList</a></li>
+    </script>
+
+    <script id="requests_main_view" type="text/template">
+      <div id="requests_main"></div>
+    </script>
+
+    <script id="requests_view" type="text/template">
+      <div class="panel-heading">
+        Request List
+        <div class="pull-right">
+          <a class="btn btn-default btn-xs new-request" href="#">New</a>
+        </div>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Status</th>
+            <th>Title</th>
+            <th>User</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody id="request_list"></tbody>
+      </table>
+    </script>
+
+    <script id="request_view" type="text/template">
+      <td>{{- id }}</td>
+      <td>{{- status.name }}</td>
+      <td>{{- title }}</td>
+      <td>{{- user.name }}</td>
+      <td><a href="#" class="btn btn-default btn-xs open-request">Open</a></td>
+    </script>
+
+    <script id="request_form_view" type="text/template">
+      <div class="panel-heading">Request Form</div>
+      <div class="panel-body">
+        <form id="request_form" class="form-horizontal">
+          {{= id() }}
+          {{= status() }}
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Title</label>
+            <div class="col-sm-10">
+              <input type="text" class="title form-control" name="title" value="{{- title }}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Content</label>
+            <div class="col-sm-10">
+              <textarea type="text" class="content form-control" name="content">{{- content }}</textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">File</label>
+            <div class="col-sm-10">
+              <span id="download_file_list"></span>
+              <input type="file" class="form-control file-tmp" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              {{= save }}
+              {{= submit }}
+              {{= approval }}
+              {{= reject }}
+            </div>
+          </div>
+        </form>
+      </div>
+    </script>
+
+    <script id="download_file_view" type="text/template">
+      <p class="uploaded-{{- id }}">
+        <a href="{{= url }}">{{- filename }}</a>
+        <a href="#" class="btn btn-link btn-xs remove-file">&times;</a>
+      </p>
+    </script>
+
+    <script id="users_main_view" type="text/template">
+      <div id="users_main"></div>
+    </script>
+
+    <script id="users_view" type="text/template">
+      <div class="panel-heading">
+        User List
+        <div class="pull-right">
+          <a class="btn btn-default btn-xs new-user" href="#">New</a>
+        </div>
+      </div>
+      <table class="table">
+        <tr>
+          <th>UserId</th>
+          <th>Name</th>
+          <th>Team</th>
+          <th>JobLevel</th>
+          <th>Admin</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tbody id="user_list"></tbody>
+      </table>
+    </script>
+
+    <script id="user_view" type="text/template">
+      <td>{{- uid }}</td>
+      <td>{{- name }}</td>
+      <td>{{- team }}</td>
+      <td>{{- jobLevel }}</td>
+      <td>{{- admin }}</td>
+      <td><a class="btn btn-default btn-xs edit">Edit</a></td>
+      <td><a class="btn btn-link btn-xs delete">Delete</a></td>
+    </script>
+
+    <script id="user_form_view" type="text/template">
+      <div class="panel-heading">New User</div>
+      <div class="panel-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">User Id</label>
+            <div class="col-sm-10">
+              <input type="text" class="uid form-control" name="uid" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+              <input type="text" class="name form-control" name="name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Team</label>
+            <div class="col-sm-10">
+              <input type="text" class="team form-control" name="team" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Job Level</label>
+            <div class="col-sm-10">
+              <select class="form-control job-level" name="job-level">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3" selected="selected">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Admin</label>
+            <div class="col-sm-10">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="admin" name="admin" />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="button" class="btn btn-default new-user">{{= submit }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </script>
+
+    <script id="login_view" type="text/template">
+      <div id="users_main"></div>
+    </script>
+
+    <script id="login_users_view" type="text/template">
+      <div class="panel-heading">User List</div>
+      <table class="table">
+        <tr>
+          <th>UserId</th>
+          <th>Name</th>
+          <th>Team</th>
+          <th>JobLevel</th>
+          <th>Admin</th>
+          <th></th>
+        </tr>
+        <tbody id="user_list"></tbody>
+      </table>
+    </script>
+
+    <script id="categories_main_view" type="text/template">
+      <div id="categories_main"></div>
+    </script>
+
+    <script id="categories_view" type="text/template">
+      <div class="panel-heading">
+        Category List
+        <div class="pull-right">
+          <a class="btn btn-default btn-xs new-category" href="#">New</a>
+        </div>
+      </div>
+      <table class="table">
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tbody id="category_list"></tbody>
+      </table>
+    </script>
+
+    <script id="category_view" type="text/template">
+      <td>{{- code }}</td>
+      <td>{{- name }}</td>
+      <td><a class="btn btn-default btn-xs edit">Edit</a></td>
+      <td><a class="btn btn-link btn-xs delete">Delete</a></td>
+    </script>
+
+    <script id="category_form_view" type="text/template">
+      <div class="panel-heading">New Category</div>
+      <div class="panel-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Code</label>
+            <div class="col-sm-10">
+              <input type="text" class="code form-control" name="code" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+              <input type="text" class="name form-control" name="name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="button" class="btn btn-default new-category">{{= submit }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </script>
+
+    <script id="status_list_view" type="text/template">
+      <div class="panel-heading">Status List</div>
+      <table class="table">
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+        </tr>
+        <tbody id="status_list"></tbody>
+      </table>
+    </script>
+
+    <script id="status_view" type="text/template">
+      <td>{{- code }}</td>
+      <td>{{- name }}</td>
+    </script>
+
+    <script id="login_user_view" type="text/template">
+      <td>{{- uid }}</td>
+      <td>{{- name }}</td>
+      <td>{{- team }}</td>
+      <td>{{- jobLevel }}</td>
+      <td>{{- admin }}</td>
+      <td><a class="btn btn-default btn-xs login">Login</a></td>
+    </script>
+
+    <script src="js/app.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+  </body>
+</html>
