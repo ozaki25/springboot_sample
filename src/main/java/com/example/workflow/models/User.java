@@ -17,6 +17,7 @@ public class User {
     private String team;
     private int jobLevel;
     private boolean admin;
+    private boolean password;
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "user")
     private List<Request> requests;
 
@@ -39,7 +40,7 @@ public class User {
     }
 
     public String getUid() {
-        return this.name;
+        return this.uid;
     }
 
     public void setUid(String uid) {

@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>springboot-sample</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>Login</h1>
+    <form id="login_form" method="post" th:action="@{'/login'}">
+      <p>
+        <label>ID:</label>
+        <input type="text" name="username" />
+      </p>
+      <p>
+        <label>Password:</label>
+        <input type="password" name="password" />
+      </p>
+      <button id="login_button" type="submit">Login!</button>
+    </form>
+  </body>
+</html>
