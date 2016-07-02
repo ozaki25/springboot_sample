@@ -20,7 +20,7 @@ public class Request {
     private Status status;
     @ManyToOne
     private User user;
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "request")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "request")
     private List<Document> documents = new ArrayList<Document>();
 
     public Request() { };
