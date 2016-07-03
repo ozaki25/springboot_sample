@@ -20,6 +20,8 @@ public class Request {
     private Status status;
     @ManyToOne
     private User user;
+    @ManyToOne
+    private User authorizer;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "request")
     private List<Document> documents = new ArrayList<Document>();
 
@@ -72,6 +74,14 @@ public class Request {
         this.user = user;
     }
 
+    public User getAuthorizer() {
+        return this.authorizer;
+    }
+
+    public void setAuthorizer(User authorizer) {
+        this.authorizer = authorizer;
+    }
+
     public List<Document> getDocuments() {
         return this.documents;
     }
@@ -81,7 +91,7 @@ public class Request {
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", user: " + this.getUserToString() + "}";
+        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", user: " + this.getUserToString() + ", authorizer: " + this.getAuthorizerToString() + "}";
     }
 
     public static String toString(List<Request> requests) {
@@ -101,5 +111,9 @@ public class Request {
 
     private String getUserToString() {
         return this.user == null ? "" : this.user.toString();
+    }
+
+    private String getAuthorizerToString() {
+        return this.authorizer == null ? "" : this.authorizer.toString();
     }
 }
