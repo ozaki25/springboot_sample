@@ -7,14 +7,31 @@
   <body>
     <h1>Login</h1>
     <form id="login_form" method="post" th:action="@{'/login'}">
-      <p>
-        <label>ID:</label>
-        <input type="text" name="username" />
-      </p>
-      <p>
-        <label>Password:</label>
-        <input type="password" name="password" />
-      </p>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Uid</th>
+            <th>Name</th>
+            <th>Team</th>
+            <th>JobLevel</th>
+            <th>Admin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="user : ${users}">
+            <td><input th:id="${user.id}" type="radio" name="username" th:value="${user.uid}" /></td>
+            <td><label th:for="${user.id}" th:text="${user.id}"></label></td>
+            <td><label th:for="${user.id}" th:text="${user.uid}"></label></td>
+            <td><label th:for="${user.id}" th:text="${user.name}"></label></td>
+            <td><label th:for="${user.id}" th:text="${user.team}"></label></td>
+            <td><label th:for="${user.id}" th:text="${user.jobLevel}"></label></td>
+            <td><label th:for="${user.id}" th:text="${user.admin}"></label></td>
+          </tr>
+        </tbody>
+      </table>
+      <input type="hidden" name="password" value="" />
       <button id="login_button" type="submit">Login!</button>
     </form>
   </body>
