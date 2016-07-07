@@ -23,7 +23,7 @@
       </p>
       <p>
         <label>User:</label>
-        <select name="user">
+        <select name="applicant">
           <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
         </select>
       </p>

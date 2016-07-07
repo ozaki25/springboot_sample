@@ -26,8 +26,8 @@
           <td th:text="${request.title}"></td>
           <td th:text="${request.content}"></td>
           <td th:text="${request.status.name}"></td>
-          <td th:text="${request.user.name}"></td>
-          <td th:text="${request.user.team}"></td>
+          <td th:text="${request.applicant.name}"></td>
+          <td th:text="${request.applicant.team}"></td>
           <td><a th:href="@{/requests-test/{id}/edit(id=${request.id})}">Edit</a></td>
           <td><a th:href="@{/requests-test/{id}(id=${request.id})}">Show</a></td>
           <td><a th:href="@{/requests-test/{id}/delete(id=${request.id})}">Destroy</a></td>

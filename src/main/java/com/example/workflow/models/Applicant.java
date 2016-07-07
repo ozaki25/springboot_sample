@@ -16,7 +16,7 @@ public class Applicant {
     private String uid;
     private String name;
     private String team;
-    @OneToOne(mappedBy = "applicant")
+    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "applicant")
     private Request request;
 
     public Applicant() { };
