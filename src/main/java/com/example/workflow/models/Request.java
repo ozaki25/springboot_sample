@@ -23,7 +23,7 @@ public class Request {
     private Status status;
     @ManyToOne
     private User authorizer;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "request")
     private List<Document> documents = new ArrayList<Document>();
 
     public Request() { };
@@ -93,7 +93,7 @@ public class Request {
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", applicant: " + this.getApplicantToString() + ", authorizer: " + this.getAuthorizerToString() + "}";
+        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", applicant: " + this.getApplicantToString() + ", authorizer: " + this.getAuthorizerToString() + ", documents: " + this.documents.size() + "}";
     }
 
     public static String toString(List<Request> requests) {
