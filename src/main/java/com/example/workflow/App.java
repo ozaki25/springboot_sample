@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @SpringBootApplication
 @Controller
@@ -15,11 +15,13 @@ public class App {
     private UserRepository userRepository;
 
     @RequestMapping("/")
-    public String home(Model model, Principal principal) {
-        User user = new User();
-        if(principal != null) user = userRepository.findByUid(principal.getName());
-        model.addAttribute("user", user);
+    public String home() {
         return "index";
+    }
+
+    @RequestMapping("/current-user")
+    public @ResponseBody User home(Principal principal) {
+        return userRepository.findByUid(principal.getName());
     }
 
     public static void main(String[] args) throws Exception {

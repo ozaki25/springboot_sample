@@ -4,29 +4,27 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class User {
+public class Applicant {
     @Id
     @GeneratedValue
     private Long id;
     private String uid;
     private String name;
     private String team;
-    private int jobLevel;
-    private boolean admin;
-    private String password;
+    @OneToOne(mappedBy = "applicant")
+    private Request request;
 
-    public User() { };
+    public Applicant() { };
 
-    public User(String uid, String name, String team, int jobLevel, boolean admin) {
+    public Applicant(String uid, String name, String team) {
         this.uid = uid;
         this.name = name;
         this.team = team;
-        this.jobLevel = jobLevel;
-        this.admin = admin;
     }
 
     public Long getId() {
@@ -61,34 +59,28 @@ public class User {
         this.team = team;
     }
 
-    public int getJobLevel() {
-        return this.jobLevel;
+    protected Request getRequest() {
+        return this.request;
     }
 
-    public void setJobLevel(int jobLevel) {
-        this.jobLevel = jobLevel;
-    }
-
-    public boolean getAdmin() {
-        return this.admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setRequest(Request request) {
+        this.request = request;
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", uid: " + this.getUid() + ", name: " + this.getName() + ", team: " + this.getTeam() + ", jobLevel: " + this.getJobLevel() + ", admin: " + this.getAdmin() + "}";
+        return "{id: " + this.getId() + ", uid: " + this.getUid() + ", name: " + this.getName() + ", team: " + this.getTeam() +  "}";
     }
 
-    public static String toString(List<User> users) {
-        if(users.size() == 0) return "User is Empty.";
+    public static String toString(List<Applicant> applicants) {
+        if(applicants.size() == 0) return "Applicant is Empty.";
         String result = "[";
-        for(User u : users) {
-            result += u.toString() + ", ";
-        }
+        for(Applicant a : applicants) { result += a.toString() + ", "; }
         result = result.substring(0, result.length() - 2);
         result += "]";
         return result;
+    }
+
+    public String getRequestIdToString() {
+        return this.request == null ? "" : this.request.getId().toString();
     }
 }

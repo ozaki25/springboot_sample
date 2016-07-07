@@ -67,7 +67,7 @@ public class Document {
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", filename: " + this.getFilename() + ", request: " + this.getRequestId() + "}";
+        return "{id: " + this.getId() + ", filename: " + this.getFilename() + ", request: " + this.getRequestIdToString() + "}";
     }
 
     public static String toString(List<Document> documents) {
@@ -81,7 +81,7 @@ public class Document {
         return result;
     }
 
-    private String getRequestId() {
+    private String getRequestIdToString() {
         return this.request == null ? "" : this.request.getId().toString();
     }
 }

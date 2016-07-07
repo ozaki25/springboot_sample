@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,22 +17,23 @@ public class Request {
     private Long id;
     private String title;
     private String content;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Applicant applicant;
     @ManyToOne
     private Status status;
     @ManyToOne
-    private User user;
-    @ManyToOne
     private User authorizer;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "request")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<Document>();
 
     public Request() { };
 
-    public Request(String title, String content, Status status, User user) {
+    public Request(String title, String content, Status status, Applicant applicant, User authorizer) {
         this.title = title;
         this.content = content;
         this.status = status;
-        this.user = user;
+        this.applicant = applicant;
+        this.authorizer = authorizer;
     }
 
     public Long getId() {
@@ -66,12 +68,12 @@ public class Request {
         this.status = status;
     }
 
-    public User getUser() {
-        return this.user;
+    public Applicant getApplicant() {
+        return this.applicant;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setApplicant(Applicant applicant) {
+        this.applicant = applicant;
     }
 
     public User getAuthorizer() {
@@ -91,15 +93,13 @@ public class Request {
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", user: " + this.getUserToString() + ", authorizer: " + this.getAuthorizerToString() + "}";
+        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", applicant: " + this.getApplicantToString() + ", authorizer: " + this.getAuthorizerToString() + "}";
     }
 
     public static String toString(List<Request> requests) {
         if(requests.size() == 0) return "Request is Empty.";
         String result = "[";
-        for(Request r : requests) {
-            result += r.toString() + ", ";
-        }
+        for(Request r : requests) { result += r.toString() + ", "; }
         result = result.substring(0, result.length() - 2);
         result += "]";
         return result;
@@ -109,8 +109,8 @@ public class Request {
         return this.status == null ? "" : this.status.toString();
     }
 
-    private String getUserToString() {
-        return this.user == null ? "" : this.user.toString();
+    private String getApplicantToString() {
+        return this.applicant == null ? "" : this.applicant.toString();
     }
 
     private String getAuthorizerToString() {
