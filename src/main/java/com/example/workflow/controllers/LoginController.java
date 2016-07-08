@@ -43,7 +43,6 @@ public class LoginController {
             "受付待ち",
             "作業完了待ち",
             "作業完了承認待ち",
-            "作業確認待ち",
             "完了"
         };
         int i = 1;
