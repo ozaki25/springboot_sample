@@ -29,7 +29,7 @@ public class LoginController {
             new User("001", "アドミンユーザ", "管理チーム", 0, true),
             new User("002", "一般ユーザ", "開発チーム", 3, false),
             new User("003", "役席ユーザ", "開発チーム", 2, false),
-            new User("004", "受付ユーザ", "運用チーム", 2, true),
+            new User("004", "受付ユーザ", "運用チーム", 2, false),
             new User("005", "担当ユーザ", "運用チーム", 4, false)
         };
         for(User user : users) userRepository.save(user);
