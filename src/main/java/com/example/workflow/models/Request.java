@@ -19,16 +19,16 @@ public class Request {
     private String content;
     @OneToOne(cascade = CascadeType.ALL)
     private Applicant applicant;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Authorizer authorizer;
     @ManyToOne
     private Status status;
-    @ManyToOne
-    private User authorizer;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "request")
     private List<Document> documents = new ArrayList<Document>();
 
     public Request() { };
 
-    public Request(String title, String content, Status status, Applicant applicant, User authorizer) {
+    public Request(String title, String content, Status status, Applicant applicant, Authorizer authorizer) {
         this.title = title;
         this.content = content;
         this.status = status;
@@ -76,11 +76,11 @@ public class Request {
         this.applicant = applicant;
     }
 
-    public User getAuthorizer() {
+    public Authorizer getAuthorizer() {
         return this.authorizer;
     }
 
-    public void setAuthorizer(User authorizer) {
+    public void setAuthorizer(Authorizer authorizer) {
         this.authorizer = authorizer;
     }
 

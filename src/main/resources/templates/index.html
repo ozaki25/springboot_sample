@@ -30,7 +30,7 @@
           </div>
           <div class="collapse navbar-collapse" id="navbar_links">
             <ul class="nav navbar-nav pull-right">
-              <li><a href="#">{{= username() }}</a></li>
+              <li><a href="/login">{{= username() }}</a></li>
             </ul>
           </div>
         </div>
@@ -55,7 +55,7 @@
             <th>Title</th>
             <th>User</th>
             <th></th>
-            </tr>
+          </tr>
         </thead>
         <tbody id="request_list"></tbody>
       </table>
@@ -104,7 +104,10 @@
             <div class="col-sm-offset-2 col-sm-10">
               {{= save }}
               {{= submit }}
-              {{= approval }}
+              {{= approve }}
+              {{= recept }}
+              {{= report }}
+              {{= complete }}
               {{= reject }}
             </div>
           </div>
@@ -128,11 +131,7 @@
             <h4 class="modal-title">Candidate of Authorizer List</h4>
           </div>
           <div class="modal-body">
-            <select class="form-control team-select">
-              <option value="開発チーム">開発チーム</option>
-              <option value="運用チーム">運用チーム</option>
-              <option value="管理チーム">管理チーム</option>
-            </select>
+            <select class="form-control team-select">{{= teamList() }}</select>
             <table class="table">
               <thead>
                 <tr>
