@@ -11,7 +11,6 @@
         <thead>
           <tr>
             <th></th>
-            <th>ID</th>
             <th>Uid</th>
             <th>Name</th>
             <th>Team</th>
@@ -21,13 +20,12 @@
         </thead>
         <tbody>
           <tr th:each="user : ${users}">
-            <td><input th:id="${user.id}" type="radio" name="username" th:value="${user.uid}" /></td>
-            <td><label th:for="${user.id}" th:text="${user.id}"></label></td>
-            <td><label th:for="${user.id}" th:text="${user.uid}"></label></td>
-            <td><label th:for="${user.id}" th:text="${user.name}"></label></td>
-            <td><label th:for="${user.id}" th:text="${user.team}"></label></td>
-            <td><label th:for="${user.id}" th:text="${user.jobLevel}"></label></td>
-            <td><label th:for="${user.id}" th:text="${user.admin}"></label></td>
+            <td><input th:id="${user.uid}" type="radio" name="username" th:value="${user.uid}" /></td>
+            <td><label th:for="${user.uid}" th:text="${user.uid}"></label></td>
+            <td><label th:for="${user.uid}" th:text="${user.name}"></label></td>
+            <td><label th:for="${user.uid}" th:text="${user.team}"></label></td>
+            <td><label th:for="${user.uid}" th:text="${user.jobLevel}"></label></td>
+            <td><label th:for="${user.uid}" th:text="${user.admin}"></label></td>
           </tr>
         </tbody>
       </table>
