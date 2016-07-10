@@ -2,37 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>springboot-sample</title>
+    <link rel="stylesheet" media="screen" href="css/bootstrap.min.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <meta charset="UTF-8" />
   </head>
   <body>
-    <h1>Login</h1>
-    <form id="login_form" method="post" th:action="@{'/login'}">
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>ID</th>
-            <th>Uid</th>
-            <th>Name</th>
-            <th>Team</th>
-            <th>JobLevel</th>
-            <th>Admin</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="user : ${users}">
-            <td><input th:id="${user.id}" type="radio" name="username" th:value="${user.uid}" /></td>
-            <td><label th:for="${user.id}" th:text="${user.id}"></label></td>
-            <td><label th:for="${user.id}" th:text="${user.uid}"></label></td>
-            <td><label th:for="${user.id}" th:text="${user.name}"></label></td>
-            <td><label th:for="${user.id}" th:text="${user.team}"></label></td>
-            <td><label th:for="${user.id}" th:text="${user.jobLevel}"></label></td>
-            <td><label th:for="${user.id}" th:text="${user.admin}"></label></td>
-          </tr>
-        </tbody>
-      </table>
-      <input type="hidden" name="password" value="" />
-      <button id="login_button" type="submit">Login!</button>
-    </form>
+    <div class="container">
+      <h1>Login</h1>
+      <form id="login_form" method="post" th:action="@{'/login'}">
+        <table id="user_table" class="table .table-striped .table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th>ID</th>
+              <th>Uid</th>
+              <th>Name</th>
+              <th>Team</th>
+              <th>JobLevel</th>
+              <th>Admin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:for="${user.id}" th:each="user : ${users}">
+              <td><input th:id="${user.id}" type="radio" name="username" th:value="${user.uid}" /></td>
+              <td><label th:text="${user.id}"></label></td>
+              <td><label th:text="${user.uid}"></label></td>
+              <td><label th:text="${user.name}"></label></td>
+              <td><label th:text="${user.team}"></label></td>
+              <td><label th:text="${user.jobLevel}"></label></td>
+              <td><label th:text="${user.admin}"></label></td>
+            </tr>
+          </tbody>
+        </table>
+        <input type="hidden" name="password" value="" />
+        <button id="login_button" class="btn btn-default" type="submit">Login!</button>
+      </form>
+    </div>
+    <script type="text/javascript">
+      $(function() {
+        $('table#user_table').on('click', 'tr', function() {
+          var id = $(this).attr('for');
+          $('input[id="' + id + '"]').prop('checked', 'checked');
+        });
+      });
+    </script>
   </body>
 </html>
