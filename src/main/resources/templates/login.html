@@ -15,7 +15,6 @@
           <thead>
             <tr>
               <th></th>
-              <th>ID</th>
               <th>Uid</th>
               <th>Name</th>
               <th>Team</th>
@@ -24,9 +23,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr th:for="${user.id}" th:each="user : ${users}">
-              <td><input th:id="${user.id}" type="radio" name="username" th:value="${user.uid}" /></td>
-              <td><label th:text="${user.id}"></label></td>
+            <tr th:for="${user.uid}" th:each="user : ${users}">
+              <td><input th:id="${user.uid}" type="radio" name="username" th:value="${user.uid}" /></td>
               <td><label th:text="${user.uid}"></label></td>
               <td><label th:text="${user.name}"></label></td>
               <td><label th:text="${user.team}"></label></td>
