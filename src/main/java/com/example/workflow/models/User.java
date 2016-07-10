@@ -29,7 +29,7 @@ public class User {
         this.admin = admin;
     }
 
-    public Long getId() {
+    protected Long getId() {
         return this.id;
     }
 
