@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -24,24 +23,22 @@ public class UsersController {
     @RequestMapping(method = RequestMethod.GET)
     public List<User> index(@RequestParam MultiValueMap<String, String> query) {
         logger.info("query: " + query);
-        List<String> teams = query.get("team");
-        String team = teams == null ? null : teams.get(0);
-        List<String> jobLevelsString = query.get("jobLevel[]");
-        List<Integer> jobLevels = new ArrayList<Integer>();
-        if(jobLevelsString != null) for(String jobLevel : jobLevelsString) jobLevels.add(Integer.parseInt(jobLevel));
+        String team = query.toSingleValueMap().get("team");
+        String jobLevelLteString = query.toSingleValueMap().get("jobLevel[lte]");
+        Integer jobLevelLte = jobLevelLteString == null ? null : Integer.parseInt(jobLevelLteString);
 
         List<User> users = new ArrayList<User>();
-        if(team != null && jobLevels.size() != 0) {
-            logger.info("repository.findByTeamAndJobLevelIn");
-            users = repository.findByTeamAndJobLevelIn(team, jobLevels);
+        if(team != null && jobLevelLte != null) {
+            logger.info("findByTeamAndJobLevelLessThanEqual");
+            users = repository.findByTeamAndJobLevelLessThanEqual(team, jobLevelLte);
         } else if(team != null) {
-            logger.info("repository.findByTeam");
+            logger.info("findByTeam");
             users = repository.findByTeam(team);
-        } else if(jobLevels.size() != 0) {
-            logger.info("repository.findByJobLevelIn");
-            users = repository.findByJobLevelIn(jobLevels);
+        } else if(jobLevelLte != null) {
+            logger.info("findByJobLevelLessThanEqual");
+            users = repository.findByJobLevelLessThanEqual(jobLevelLte);
         } else {
-            logger.info("repository.findAll");
+            logger.info("findAll");
             users = repository.findAll();
         }
         logger.info(User.toString(users));

@@ -7,7 +7,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findById(Long id);
     User findByUid(String uid);
     List<User> findByTeam(String team);
-    List<User> findByJobLevelIn(List<Integer> jobLevels);
-    List<User> findByTeamAndJobLevelIn(String team, List<Integer> jobLevels);
+    List<User> findByJobLevelLessThanEqual(Integer jobLevel);
+    List<User> findByTeamAndJobLevelLessThanEqual(String team, Integer jobLevel);
     List<User> findAll();
 }
