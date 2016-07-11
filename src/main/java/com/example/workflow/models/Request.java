@@ -30,12 +30,13 @@ public class Request {
 
     public Request() { };
 
-    public Request(String title, String content, Status status, Applicant applicant, Authorizer authorizer) {
+    public Request(String title, String content, Status status, Applicant applicant, Authorizer authorizer, Category category) {
         this.title = title;
         this.content = content;
         this.status = status;
         this.applicant = applicant;
         this.authorizer = authorizer;
+        this.category = category;
     }
 
     public Long getId() {
@@ -70,6 +71,14 @@ public class Request {
         this.status = status;
     }
 
+    public Category getCategory() {
+        return this.category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public Applicant getApplicant() {
         return this.applicant;
     }
@@ -95,7 +104,7 @@ public class Request {
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", applicant: " + this.getApplicantToString() + ", authorizer: " + this.getAuthorizerToString() + ", documents: " + this.documents.size() + "}";
+        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", category: " + this.getCategoryToString() + ", applicant: " + this.getApplicantToString() + ", authorizer: " + this.getAuthorizerToString() + ", documents: " + this.documents.size() + "}";
     }
 
     public static String toString(List<Request> requests) {
@@ -109,6 +118,10 @@ public class Request {
 
     private String getStatusToString() {
         return this.status == null ? "" : this.status.toString();
+    }
+
+    private String getCategoryToString() {
+        return this.category == null ? "" : this.category.toString();
     }
 
     private String getApplicantToString() {
