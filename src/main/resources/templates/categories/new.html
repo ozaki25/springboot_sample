@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>springboot-sample</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>New Category</h1>
+    <form action="/categories-test" method="post">
+      <p>
+        <label>Name:</label>
+        <input type="text" name="name" />
+      </p>
+      <p>
+        <label>Code:</label>
+        <input type="text" name="code" />
+      </p>
+      <button type="submit">Submit</button>
+    </form>
+    <a href="/categories-test">Back</a>
+  </body>
+</html>

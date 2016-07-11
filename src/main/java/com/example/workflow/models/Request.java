@@ -23,6 +23,8 @@ public class Request {
     private Authorizer authorizer;
     @ManyToOne
     private Status status;
+    @ManyToOne
+    private Category category;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "request")
     private List<Document> documents = new ArrayList<Document>();
 
