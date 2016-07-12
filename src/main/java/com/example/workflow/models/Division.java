@@ -4,25 +4,29 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Category {
+public class Division {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
     private String code;
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "category")
-    private List<Division> divisions = new ArrayList<Division>();
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private Category category;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "division")
+    private List<Request> requests = new ArrayList<Request>();
 
-    public Category() { };
+    public Division() { };
 
-    public Category(String name, String code) {
+    public Division(String name, String code, Category category) {
         this.name = name;
         this.code = code;
+        this.category = category;
     }
 
     public Long getId() {
@@ -49,26 +53,30 @@ public class Category {
         this.code = code;
     }
 
-    protected List<Division> getDivisions() {
-        return this.divisions;
+    public Category getCategory() {
+        return this.category;
     }
 
-    public void setDivisions(List<Division> divisions) {
-        this.divisions = divisions;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", name: " + this.getName() + ", code: " + this.getCode() + "}";
+        return "{id: " + this.getId() + ", name: " + this.getName() + ", code: " + this.getCode() + ", category: " + this.getCategoryToString() + "}";
     }
 
-    public static String toString(List<Category> categories) {
-        if(categories.size() == 0) return "Category is Empty.";
+    public static String toString(List<Division> divisions) {
+        if(divisions.size() == 0) return "Division is Empty.";
         String result = "[";
-        for(Category c : categories) {
-            result += c.toString() + ", ";
+        for(Division d : divisions) {
+            result += d.toString() + ", ";
         }
         result = result.substring(0, result.length() - 2);
         result += "]";
         return result;
+    }
+
+    private String getCategoryToString() {
+        return this.category == null ? "" : this.category.toString();
     }
 }

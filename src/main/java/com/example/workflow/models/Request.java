@@ -24,19 +24,19 @@ public class Request {
     @ManyToOne
     private Status status;
     @ManyToOne
-    private Category category;
+    private Division division;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "request")
     private List<Document> documents = new ArrayList<Document>();
 
     public Request() { };
 
-    public Request(String title, String content, Status status, Applicant applicant, Authorizer authorizer, Category category) {
+    public Request(String title, String content, Status status, Applicant applicant, Authorizer authorizer, Division division) {
         this.title = title;
         this.content = content;
         this.status = status;
         this.applicant = applicant;
         this.authorizer = authorizer;
-        this.category = category;
+        this.division = division;
     }
 
     public Long getId() {
@@ -71,12 +71,12 @@ public class Request {
         this.status = status;
     }
 
-    public Category getCategory() {
-        return this.category;
+    public Division getDivision() {
+        return this.division;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setDivision(Division division) {
+        this.division = division;
     }
 
     public Applicant getApplicant() {
@@ -104,7 +104,7 @@ public class Request {
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", category: " + this.getCategoryToString() + ", applicant: " + this.getApplicantToString() + ", authorizer: " + this.getAuthorizerToString() + ", documents: " + this.documents.size() + "}";
+        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", division: " + this.getDivisionToString() + ", applicant: " + this.getApplicantToString() + ", authorizer: " + this.getAuthorizerToString() + ", documents: " + this.documents.size() + "}";
     }
 
     public static String toString(List<Request> requests) {
@@ -120,8 +120,8 @@ public class Request {
         return this.status == null ? "" : this.status.toString();
     }
 
-    private String getCategoryToString() {
-        return this.category == null ? "" : this.category.toString();
+    private String getDivisionToString() {
+        return this.division == null ? "" : this.division.toString();
     }
 
     private String getApplicantToString() {
