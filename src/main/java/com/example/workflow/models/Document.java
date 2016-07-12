@@ -1,5 +1,9 @@
 package com.example.workflow;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +13,7 @@ import javax.persistence.ManyToOne;
 import java.util.List;
 
 @Entity
+@JsonIgnoreProperties({"file"})
 public class Document {
     @Id
     @GeneratedValue
@@ -17,6 +22,8 @@ public class Document {
     @Lob
     private byte[] file;
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Request request;
 
     public Document() { };
@@ -48,8 +55,7 @@ public class Document {
         this.filename = filename;
     }
 
-    // publicだとjson返す時に無限ループする
-    protected byte[] getFile() {
+    public byte[] getFile() {
         return this.file;
     }
 
@@ -57,8 +63,7 @@ public class Document {
         this.file = file;
     }
 
-    // publicだとjson返す時に無限ループする
-    protected Request getRequest() {
+    public Request getRequest() {
         return this.request;
     }
 

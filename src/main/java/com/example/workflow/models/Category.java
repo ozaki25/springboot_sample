@@ -49,7 +49,7 @@ public class Category {
         this.code = code;
     }
 
-    protected List<Division> getDivisions() {
+    public List<Division> getDivisions() {
         return this.divisions;
     }
 

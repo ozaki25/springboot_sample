@@ -1,5 +1,8 @@
 package com.example.workflow;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +19,8 @@ public class Authorizer {
     private String name;
     private String team;
     @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "authorizer")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Request request;
 
     public Authorizer() { };
@@ -58,7 +63,7 @@ public class Authorizer {
         this.team = team;
     }
 
-    protected Request getRequest() {
+    public Request getRequest() {
         return this.request;
     }
 
