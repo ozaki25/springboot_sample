@@ -75,18 +75,7 @@
         <form id="request_form" class="form-horizontal">
           {{= id }}
           {{= status }}
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Category</label>
-            <div class="col-sm-10">
-              {{= inputCategory }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Division</label>
-            <div class="col-sm-10">
-              {{= inputDivision }}
-            </div>
-          </div>
+          <div id="select_category_field"></div>
           <div class="form-group">
             <label class="col-sm-2 control-label">Title</label>
             <div class="col-sm-10">
@@ -115,11 +104,7 @@
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               {{= save }}
-              {{= submit }}
-              {{= approve }}
-              {{= accept }}
-              {{= report }}
-              {{= complete }}
+              {{= progress }}
               {{= reject }}
               {{= destroy }}
             </div>
@@ -127,6 +112,25 @@
         </form>
       </div>
       <div id="select_authorizer_modal"></div>
+    </script>
+
+    <script id="select_category_view" type="text/template">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Category</label>
+        <div class="col-sm-10">
+          {{= inputCategory }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Division</label>
+        <div class="col-sm-10">
+          {{= inputDivision }}
+        </div>
+      </div>
+    </script>
+
+    <script id="select_division_view" type="text/template">
+      {{- name }}
     </script>
 
     <script id="download_file_view" type="text/template">
@@ -345,7 +349,7 @@
     </script>
 
     <script id="division_view" type="text/template">
-      <td>{{- category.name }}</td>
+      <td>{{= categoryName }}</td>
       <td>{{- code }}</td>
       <td>{{- name }}</td>
       <td><a class="btn btn-default btn-xs edit">Edit</a></td>

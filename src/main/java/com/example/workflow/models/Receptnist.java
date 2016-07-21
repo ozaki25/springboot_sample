@@ -7,25 +7,25 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import java.util.List;
 
 @Entity
-public class Authorizer {
+public class Receptnist {
     @Id
     @GeneratedValue
     private Long id;
     private String uid;
     private String name;
     private String team;
-    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "authorizer")
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
-    private Request request;
+    private Category category;
 
-    public Authorizer() { };
+    public Receptnist() { };
 
-    public Authorizer(String uid, String name, String team) {
+    public Receptnist(String uid, String name, String team) {
         this.uid = uid;
         this.name = name;
         this.team = team;
@@ -63,28 +63,28 @@ public class Authorizer {
         this.team = team;
     }
 
-    public Request getRequest() {
-        return this.request;
+    public Category getCategory() {
+        return this.category;
     }
 
-    public void setRequest(Request request) {
-        this.request = request;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", uid: " + this.getUid() + ", name: " + this.getName() + ", team: " + this.getTeam() + "requestId" + this.getRequestIdToString() + "}";
+        return "{id: " + this.getId() + ", uid: " + this.getUid() + ", name: " + this.getName() + ", team: " + this.getTeam() + "categoryId: " + this.getCategoryIdToString() + "}";
     }
 
-    public static String toString(List<Authorizer> authorizers) {
-        if(authorizers.size() == 0) return "Authorizer is Empty.";
+    public static String toString(List<Receptnist> receptnists) {
+        if(receptnists.size() == 0) return "Receptnist is Empty.";
         String result = "[";
-        for(Authorizer a : authorizers) { result += a.toString() + ", "; }
+        for(Receptnist r : receptnists) { result += r.toString() + ", "; }
         result = result.substring(0, result.length() - 2);
         result += "]";
         return result;
     }
 
-    public String getRequestIdToString() {
-        return this.request == null ? "" : this.request.getId().toString();
+    public String getCategoryIdToString() {
+        return this.category == null ? "" : this.category.getId().toString();
     }
 }

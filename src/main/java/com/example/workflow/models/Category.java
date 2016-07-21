@@ -17,6 +17,8 @@ public class Category {
     private String code;
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "category")
     private List<Division> divisions = new ArrayList<Division>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private List<Receptnist> receptnists = new ArrayList<Receptnist>();
 
     public Category() { };
 
@@ -57,8 +59,16 @@ public class Category {
         this.divisions = divisions;
     }
 
+    public List<Receptnist> getReceptnists() {
+        return this.receptnists;
+    }
+
+    public void setReceptnists(List<Receptnist> receptnists) {
+        this.receptnists = receptnists;
+    }
+
     public String toString() {
-        return "{id: " + this.getId() + ", name: " + this.getName() + ", code: " + this.getCode() + "}";
+        return "{id: " + this.getId() + ", name: " + this.getName() + ", code: " + this.getCode() + ", receptnist: " + this.getReceptnists().size() + "}";
     }
 
     public static String toString(List<Category> categories) {
