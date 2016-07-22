@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties({"divisions", "receptnists"})
 @Entity
 public class Category {
     @Id

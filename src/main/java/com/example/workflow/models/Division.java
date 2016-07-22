@@ -1,8 +1,5 @@
 package com.example.workflow;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,8 +17,6 @@ public class Division {
     private String name;
     private String code;
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     private Category category;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "division")
     private List<Request> requests = new ArrayList<Request>();
