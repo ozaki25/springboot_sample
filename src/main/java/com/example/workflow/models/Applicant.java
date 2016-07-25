@@ -2,7 +2,7 @@ package com.example.workflow;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,7 +12,6 @@ import javax.persistence.OneToOne;
 import java.util.List;
 
 @Entity
-@JsonIgnoreProperties({"getRequestIdToString"})
 public class Applicant {
     @Id
     @GeneratedValue
@@ -86,6 +85,7 @@ public class Applicant {
         return result;
     }
 
+    @JsonIgnore
     public String getRequestIdToString() {
         return this.request == null ? "" : this.request.getId().toString();
     }
