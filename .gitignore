@@ -7,3 +7,4 @@ target
 log
 backbone
 public/js/app.js
+src/main/resources/templates/index.html
