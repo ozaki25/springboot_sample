@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>springboot-sample</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>Listing Works</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Content</th>
+          <th>RequestId</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="work : ${works}">
+          <td th:text="${work.id}"></td>
+          <td th:text="${work.content}"></td>
+          <td th:text="${work.getRequestIdToString()}"></td>
+          <td><a th:href="@{/works-test/{id}(id=${work.id})}">Show</a></td>
+          <td><a th:href="@{/works-test/{id}/delete(id=${work.id})}">Destroy</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
