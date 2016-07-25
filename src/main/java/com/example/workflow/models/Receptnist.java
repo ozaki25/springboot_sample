@@ -84,7 +84,7 @@ public class Receptnist {
         return result;
     }
 
-    public String getCategoryIdToString() {
+    private String getCategoryIdToString() {
         return this.category == null ? "" : this.category.getId().toString();
     }
 }

@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonIgnoreProperties({"divisions", "receptnists"})
+@JsonIgnoreProperties({"divisions"})
 @Entity
 public class Category {
     @Id
