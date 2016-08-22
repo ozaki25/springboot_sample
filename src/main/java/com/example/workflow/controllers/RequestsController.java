@@ -16,6 +16,8 @@ public class RequestsController {
     private final Log logger = LogFactory.getLog(RequestsController.class);
     @Autowired
     private RequestRepository repository;
+    @Autowired
+    private DocumentRepository documentRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Request> index() {
@@ -42,6 +44,9 @@ public class RequestsController {
     public Request update(@PathVariable Long id, @RequestBody Request request) {
         request.setId(id);
         Request r = repository.save(request);
+        for(Document d : documentRepository.findByRequestId(request.getId())) {
+            if(!r.getDocuments().contains(d))  documentRepository.delete(d);
+        }
         logger.info(r.toString());
         return r;
     }
