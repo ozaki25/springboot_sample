@@ -21,7 +21,7 @@ public class Document {
     private String filename;
     @Lob
     private byte[] file;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private Request request;

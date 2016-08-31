@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/requests/{requestId}/documents")
+@RequestMapping("/documents")
 public class DocumentsController {
     private final Log logger = LogFactory.getLog(DocumentsController.class);
     @Autowired
@@ -36,8 +36,8 @@ public class DocumentsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Document create(@PathVariable Long requestId, @RequestParam("file") MultipartFile file) throws IOException {
-        Request request = requestRepository.findById(requestId);
+    public Document create(@RequestParam("request") String requestId, @RequestParam("file") MultipartFile file) throws IOException {
+        Request request = requestId.equals("") ? null : requestRepository.findById(Long.parseLong(requestId));
         Document document = new Document(file.getOriginalFilename(), file.getBytes(), request);
         Document d = repository.save(document);
         logger.info(d.toString());
