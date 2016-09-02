@@ -16,20 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class RequestsController {
     private final Log logger = LogFactory.getLog(RequestsController.class);
     @Autowired
-    private RequestRepository repository;
+    private RequestService requestService;
     @Autowired
     private DocumentRepository documentRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Request> index() {
-        List<Request> requests = repository.findAll();
+        List<Request> requests = requestService.findAll();
         logger.info(Request.toString(requests));
         return requests;
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Request show(@PathVariable Long id) {
-        Request r = repository.findById(id);
+        Request r = requestService.findById(id);
         logger.info(r.toString());
         return r;
     }
@@ -38,7 +38,7 @@ public class RequestsController {
     public Request create(@RequestBody Request request) {
         List<Document> documents = request.getDocuments();
         request.setDocuments(new ArrayList<Document>());
-        Request r = repository.save(request);
+        Request r = requestService.save(request);
         for(Document d : documents) {
             d.setRequest(r);
             documentRepository.save(d);
@@ -51,7 +51,7 @@ public class RequestsController {
     @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
     public Request update(@PathVariable Long id, @RequestBody Request request) {
         request.setId(id);
-        Request r = repository.save(request);
+        Request r = requestService.save(request);
 
         List<Document> inputDocuments = r.getDocuments();
         List<Document> savedDocuments = documentRepository.findByRequestId(request.getId());
@@ -75,9 +75,9 @@ public class RequestsController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public Request delete(@PathVariable Long id){
-        Request r = repository.findById(id);
+        Request r = requestService.findById(id);
         logger.info(r.toString());
-        repository.delete(id);
+        requestService.delete(id);
         return r;
     }
 }

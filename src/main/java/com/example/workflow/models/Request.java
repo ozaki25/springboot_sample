@@ -15,6 +15,7 @@ public class Request {
     @Id
     @GeneratedValue
     private Long id;
+    private String reqId;
     private String title;
     private String content;
     @OneToOne(cascade = CascadeType.ALL)
@@ -48,6 +49,14 @@ public class Request {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getReqId() {
+        return this.reqId;
+    }
+
+    public void setReqId(String reqId) {
+        this.reqId = reqId;
     }
 
     public String getTitle() {
@@ -115,7 +124,7 @@ public class Request {
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", division: " + this.getDivisionToString() + ", applicant: " + this.getApplicantToString() + ", authorizer: " + this.getAuthorizerToString() + ", work: " + this.getWorkToString() + ", documents: " + this.documents.size() + "}";
+        return "{id: " + this.getId() + ", reqId: " + this.getReqId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", division: " + this.getDivisionToString() + ", applicant: " + this.getApplicantToString() + ", authorizer: " + this.getAuthorizerToString() + ", work: " + this.getWorkToString() + ", documents: " + this.documents.size() + "}";
     }
 
     public static String toString(List<Request> requests) {
