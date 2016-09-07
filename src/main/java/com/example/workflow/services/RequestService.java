@@ -19,6 +19,9 @@ public class RequestService {
     public Request findById(Long id) {
         return repository.findById(id);
     }
+    public List<Request> findAll() {
+        return repository.findAll();
+    }
     public Page<Request> findAll(int page, int size) {
         return repository.findAll(new PageRequest(page, size));
     }

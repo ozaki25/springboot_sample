@@ -26,7 +26,7 @@ public class RequestsController {
     @RequestMapping(method = RequestMethod.GET)
     public List<Request> index(@RequestParam MultiValueMap<String, String> query) {
         String page = query.toSingleValueMap().get("page");
-        List<Request> requests = requestService.findAll(Integer.parseInt(page), PAGE_SIZE).getContent();
+        List<Request> requests = page == null ? requestService.findAll() : requestService.findAll(Integer.parseInt(page), PAGE_SIZE).getContent();
         logger.info(Request.toString(requests));
         return requests;
     }
