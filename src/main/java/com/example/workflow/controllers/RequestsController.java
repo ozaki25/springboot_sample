@@ -5,24 +5,28 @@ import java.util.ArrayList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/requests")
 public class RequestsController {
     private final Log logger = LogFactory.getLog(RequestsController.class);
+    private final int PAGE_SIZE = 2;
     @Autowired
     private RequestService requestService;
     @Autowired
     private DocumentRepository documentRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Request> index() {
-        List<Request> requests = requestService.findAll();
+    public List<Request> index(@RequestParam MultiValueMap<String, String> query) {
+        String page = query.toSingleValueMap().get("page");
+        List<Request> requests = requestService.findAll(Integer.parseInt(page), PAGE_SIZE).getContent();
         logger.info(Request.toString(requests));
         return requests;
     }

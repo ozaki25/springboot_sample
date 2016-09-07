@@ -3,6 +3,8 @@ package com.example.workflow;
 import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,13 +16,13 @@ public class RequestService {
     @Autowired
     RequestNumberRepository requestNumberRepository;
 
-    public Request findById(Long id){
+    public Request findById(Long id) {
         return repository.findById(id);
     }
-    public List<Request> findAll(){
-        return repository.findAll();
+    public Page<Request> findAll(int page, int size) {
+        return repository.findAll(new PageRequest(page, size));
     }
-    public Request save(Request request){
+    public Request save(Request request) {
         if(request.getReqId() == null) {
             int year = Calendar.getInstance().get(Calendar.YEAR);
             RequestNumber currentRequestNumber = requestNumberRepository.findByYear(year);
@@ -37,7 +39,7 @@ public class RequestService {
         }
         return repository.save(request);
     }
-    public void delete(Long id){
+    public void delete(Long id) {
         repository.delete(id);
     }
 
