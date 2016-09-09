@@ -31,6 +31,11 @@ public class RequestsController {
         return requests;
     }
 
+    @RequestMapping(value = "total-page", method = RequestMethod.GET)
+    public int totalPage() {
+        return requestService.findAll(0, PAGE_SIZE).getTotalPages();
+    }
+
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Request show(@PathVariable Long id) {
         Request r = requestService.findById(id);
