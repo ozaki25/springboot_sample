@@ -26,14 +26,18 @@ public class RequestsController {
     @RequestMapping(method = RequestMethod.GET)
     public List<Request> index(@RequestParam MultiValueMap<String, String> query) {
         String page = query.toSingleValueMap().get("page");
-        List<Request> requests = page == null ? requestService.findAll() : requestService.findAll(Integer.parseInt(page), PAGE_SIZE).getContent();
+        List<Request> requests = page == null ? requestService.findAll() : requestService.findAll(Integer.parseInt(page) - 1, PAGE_SIZE).getContent();
         logger.info(Request.toString(requests));
         return requests;
     }
 
-    @RequestMapping(value = "total-page", method = RequestMethod.GET)
-    public int totalPage() {
-        return requestService.findAll(0, PAGE_SIZE).getTotalPages();
+    @RequestMapping(value = "page", method = RequestMethod.GET)
+    public Page page(@RequestParam MultiValueMap<String, String> query) {
+        String page = query.toSingleValueMap().get("page");
+        if(page == null) return new Page();
+        int pageNumber = Integer.parseInt(page);
+        int totalPage = requestService.findAll(pageNumber - 1, PAGE_SIZE).getTotalPages();
+        return new Page(pageNumber, totalPage);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
