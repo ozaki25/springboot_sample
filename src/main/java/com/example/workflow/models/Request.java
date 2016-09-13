@@ -28,6 +28,8 @@ public class Request {
     private Status status;
     @ManyToOne
     private Division division;
+    @ManyToOne
+    private Category category;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "request")
     private List<Document> documents = new ArrayList<Document>();
 
@@ -89,6 +91,14 @@ public class Request {
 
     public void setDivision(Division division) {
         this.division = division;
+    }
+
+    public Category getCategory() {
+        return this.category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Applicant getApplicant() {
