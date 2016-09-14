@@ -72,7 +72,7 @@ public class RequestService {
 
         List<Predicate> criteria = new ArrayList<Predicate>();
         if(requestSearch.reqId != null) criteria.add(cb.equal(r.get("reqId"), requestSearch.reqId));
-        if(requestSearch.title != null) criteria.add(cb.equal(r.get("title"), requestSearch.title));
+        if(requestSearch.title != null) criteria.add(cb.like(r.get("title"), "%" + requestSearch.title + "%"));
         if(applicant != null)           criteria.add(cb.equal(r.get("applicant"), applicant));
         if(authorizer != null)          criteria.add(cb.equal(r.get("authorizer"), authorizer));
         if(status != null)              criteria.add(cb.equal(r.get("status"), status));
