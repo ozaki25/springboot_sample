@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface RequestRepository extends JpaRepository<Request, Long> {
     Request findById(Long id);
-    List<Request> findAll();
-    Page<Request> findAll(Pageable page);
 }

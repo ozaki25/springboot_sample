@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/requests")
 public class RequestsController {
     private final Log logger = LogFactory.getLog(RequestsController.class);
-    private final int PAGE_SIZE = 2;
     @Autowired
     private RequestService requestService;
     @Autowired
@@ -25,19 +24,16 @@ public class RequestsController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Request> index(@RequestParam MultiValueMap<String, String> query) {
-        String page = query.toSingleValueMap().get("page");
-        List<Request> requests = page == null ? requestService.findAll() : requestService.findAll(Integer.parseInt(page) - 1, PAGE_SIZE).getContent();
+        RequestSearch requestSearch = new RequestSearch(query);
+        List<Request> requests = requestService.search(requestSearch);
         logger.info(Request.toString(requests));
         return requests;
     }
 
     @RequestMapping(value = "page", method = RequestMethod.GET)
     public Page page(@RequestParam MultiValueMap<String, String> query) {
-        String page = query.toSingleValueMap().get("page");
-        if(page == null) return new Page();
-        int pageNumber = Integer.parseInt(page);
-        int totalPage = requestService.findAll(pageNumber - 1, PAGE_SIZE).getTotalPages();
-        return new Page(pageNumber, totalPage);
+        RequestSearch requestSearch = new RequestSearch(query);
+        return requestService.page(requestSearch);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
