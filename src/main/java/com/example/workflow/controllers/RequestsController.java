@@ -30,10 +30,11 @@ public class RequestsController {
         return requests;
     }
 
-    @RequestMapping(value = "page", method = RequestMethod.GET)
-    public Page page(@RequestParam MultiValueMap<String, String> query) {
+    @RequestMapping(value = "page/{page}", method = RequestMethod.GET)
+    public Page page(@PathVariable int page, @RequestParam MultiValueMap<String, String> query) {
         RequestSearch requestSearch = new RequestSearch(query);
-        return requestService.page(requestSearch);
+        int totalPage = requestService.getTotalPage(requestSearch);
+        return new Page(page, totalPage);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)

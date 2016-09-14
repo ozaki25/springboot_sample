@@ -52,15 +52,14 @@ public class RequestService {
             em.createQuery(cq).setFirstResult((requestSearch.page - 1) * PAGE_SIZE).setMaxResults(PAGE_SIZE).getResultList();
     }
 
-    public Page page(RequestSearch requestSearch) {
+    public int getTotalPage(RequestSearch requestSearch) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Request> r = cq.from(Request.class);
         cq.select(cb.count(r));
         List<Predicate> criteria = this.setCriteria(cb, r, requestSearch);
         cq.where(cb.and(criteria.toArray(new Predicate[] { })));
-        int totalPage =  (int)Math.ceil(em.createQuery(cq).getSingleResult().doubleValue() / (double)PAGE_SIZE);
-        return new Page(requestSearch.page, totalPage);
+        return (int)Math.ceil(em.createQuery(cq).getSingleResult().doubleValue() / (double)PAGE_SIZE);
     }
 
     private List<Predicate> setCriteria(CriteriaBuilder cb, Root<Request> r, RequestSearch requestSearch) {
