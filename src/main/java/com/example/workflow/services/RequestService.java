@@ -33,6 +33,8 @@ public class RequestService {
     CategoryRepository categoryRepository;
     @Autowired
     DivisionRepository divisionRepository;
+    @Autowired
+    DocumentRepository documentRepository;
     @PersistenceContext
     private EntityManager em;
 
@@ -84,7 +86,9 @@ public class RequestService {
     public Request save(Request request) {
         if(request.getReqId() == null) request.setReqId(this.getReqId(request));
         request.setCategory(this.getCategory(request));
-        return repository.save(request);
+        Request r = repository.save(request);
+        this.updateDocuments(r, request.getDocuments(), documentRepository.findByRequestId(request.getId()));
+        return r;
     }
 
     public void delete(Long id) {
@@ -97,7 +101,7 @@ public class RequestService {
         if(currentRequestNumber == null) {
             RequestNumber requestNumber = new RequestNumber(year);
             requestNumberRepository.save(requestNumber);
-            return  this.generateReqId(requestNumber);
+            return this.generateReqId(requestNumber);
         } else {
             currentRequestNumber.setNumber(currentRequestNumber.getNumber() + 1);
             requestNumberRepository.save(currentRequestNumber);
@@ -112,5 +116,24 @@ public class RequestService {
     private Category getCategory(Request request) {
         Long id = request.getDivision().getId();
         return divisionRepository.findById(id).getCategory();
+    }
+
+    private void updateDocuments(Request request, List<Document> inputDocuments, List<Document> savedDocuments) {
+        List<Document> merged = new ArrayList<Document>();
+        merged.addAll(inputDocuments);
+        merged.addAll(savedDocuments);
+        for(Document d : merged) {
+            boolean input = false;
+            boolean saved = false;
+            for(Document document : inputDocuments) if(document.getId() == d.getId()) input = true;
+            for(Document document : savedDocuments) if(document.getId() == d.getId()) saved = true;
+            if(input) {
+                Document document = documentRepository.findById(d.getId());
+                document.setRequest(request);
+                documentRepository.save(document);
+            } else if(!input && saved) {
+                documentRepository.delete(d);
+            }
+        }
     }
 }

@@ -46,14 +46,7 @@ public class RequestsController {
 
     @RequestMapping(method = RequestMethod.POST)
     public Request create(@RequestBody Request request) {
-        List<Document> documents = request.getDocuments();
-        request.setDocuments(new ArrayList<Document>());
         Request r = requestService.save(request);
-        for(Document d : documents) {
-            d.setRequest(r);
-            documentRepository.save(d);
-        }
-        for(Document d : documentRepository.findByRequestIdIsNull()) documentRepository.delete(d);
         logger.info(r.toString());
         return r;
     }
@@ -62,23 +55,6 @@ public class RequestsController {
     public Request update(@PathVariable Long id, @RequestBody Request request) {
         request.setId(id);
         Request r = requestService.save(request);
-
-        List<Document> inputDocuments = r.getDocuments();
-        List<Document> savedDocuments = documentRepository.findByRequestId(request.getId());
-        List<Document> mergedDocuments = new ArrayList<Document>();
-        mergedDocuments.addAll(inputDocuments);
-        mergedDocuments.addAll(savedDocuments);
-        for(Document d : mergedDocuments) {
-            boolean input = inputDocuments.contains(d);
-            boolean saved = savedDocuments.contains(d);
-            if(input && !saved) {
-                d.setRequest(r);
-                documentRepository.save(d);
-            } else if(!input && saved) {
-                documentRepository.delete(d);
-            }
-        }
-        for(Document d : documentRepository.findByRequestIdIsNull()) documentRepository.delete(d);
         logger.info(r.toString());
         return r;
     }

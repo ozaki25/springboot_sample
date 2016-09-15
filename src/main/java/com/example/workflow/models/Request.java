@@ -30,7 +30,7 @@ public class Request {
     private Division division;
     @ManyToOne
     private Category category;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "request")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "request")
     private List<Document> documents = new ArrayList<Document>();
 
     public Request() { };
