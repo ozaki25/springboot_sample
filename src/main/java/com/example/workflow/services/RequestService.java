@@ -65,20 +65,18 @@ public class RequestService {
     }
 
     private List<Predicate> setCriteria(CriteriaBuilder cb, Root<Request> r, RequestSearch requestSearch) {
-        Applicant applicant   = requestSearch.applicantId  == null ? null : applicantRepository.findById(requestSearch.applicantId);
-        Authorizer authorizer = requestSearch.authorizerId == null ? null : authorizerRepository.findById(requestSearch.authorizerId);
-        Status status         = requestSearch.statusId     == null ? null : statusRepository.findById(requestSearch.statusId);
-        Category category     = requestSearch.categoryId   == null ? null : categoryRepository.findById(requestSearch.categoryId);
-        Division division     = requestSearch.divisionId   == null ? null : divisionRepository.findById(requestSearch.divisionId);
+        Status status         = requestSearch.statusId      == null ? null : statusRepository.findById(requestSearch.statusId);
+        Category category     = requestSearch.categoryId    == null ? null : categoryRepository.findById(requestSearch.categoryId);
+        Division division     = requestSearch.divisionId    == null ? null : divisionRepository.findById(requestSearch.divisionId);
 
         List<Predicate> criteria = new ArrayList<Predicate>();
-        if(requestSearch.reqId != null) criteria.add(cb.equal(r.get("reqId"), requestSearch.reqId));
-        if(requestSearch.title != null) criteria.add(cb.like(r.get("title"), "%" + requestSearch.title + "%"));
-        if(applicant != null)           criteria.add(cb.equal(r.get("applicant"), applicant));
-        if(authorizer != null)          criteria.add(cb.equal(r.get("authorizer"), authorizer));
-        if(status != null)              criteria.add(cb.equal(r.get("status"), status));
-        if(category != null)            criteria.add(cb.equal(r.get("category"), category));
-        if(division != null)            criteria.add(cb.equal(r.get("division"), division));
+        if(requestSearch.reqId != null)         criteria.add(cb.equal(r.get("reqId"), requestSearch.reqId));
+        if(requestSearch.title != null)         criteria.add(cb.like(r.get("title"), "%" + requestSearch.title + "%"));
+        if(requestSearch.team != null)          criteria.add(cb.equal(r.get("applicant").get("team"), requestSearch.team));
+        if(requestSearch.applicantName != null) criteria.add(cb.like(r.get("applicant").get("name"), requestSearch.applicantName + "%"));
+        if(status != null)                      criteria.add(cb.equal(r.get("status"), status));
+        if(category != null)                    criteria.add(cb.equal(r.get("category"), category));
+        if(division != null)                    criteria.add(cb.equal(r.get("division"), division));
 
         return criteria;
     }
