@@ -94,7 +94,9 @@ public class RequestService {
     }
 
     private String getReqId(Request request) {
-        int year = Calendar.getInstance().get(Calendar.YEAR);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -3);
+        int year = calendar.get(Calendar.YEAR);
         RequestNumber currentRequestNumber = requestNumberRepository.findByYear(year);
         if(currentRequestNumber == null) {
             RequestNumber requestNumber = new RequestNumber(year);
