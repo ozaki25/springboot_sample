@@ -8,7 +8,7 @@ public class RequestSearch {
     public String reqId;
     public String title;
     public String team;
-    public String applicantName;
+    public String name;
     public Long statusId;
     public Long categoryId;
     public Long divisionId;
@@ -20,7 +20,7 @@ public class RequestSearch {
         String reqId = query.toSingleValueMap().get("reqId");
         String title = query.toSingleValueMap().get("title");
         String team = query.toSingleValueMap().get("team");
-        String applicantName = query.toSingleValueMap().get("applicantName");
+        String name = query.toSingleValueMap().get("name");
         String statusIdString = query.toSingleValueMap().get("statusId");
         String categoryIdString = query.toSingleValueMap().get("categoryId");
         String divisionIdString = query.toSingleValueMap().get("divisionId");
@@ -32,7 +32,7 @@ public class RequestSearch {
         this.reqId = StringUtils.hasLength(reqId) ? reqId : null;
         this.title = StringUtils.hasLength(title) ? title : null;
         this.team = StringUtils.hasLength(team) ? team : null;
-        this.applicantName = StringUtils.hasLength(applicantName) ? applicantName : null;
+        this.name = StringUtils.hasLength(name) ? name : null;
         try {
             this.statusId = Long.parseLong(statusIdString);
         } catch(NumberFormatException e) {

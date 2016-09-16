@@ -70,13 +70,13 @@ public class RequestService {
         Division division     = requestSearch.divisionId    == null ? null : divisionRepository.findById(requestSearch.divisionId);
 
         List<Predicate> criteria = new ArrayList<Predicate>();
-        if(requestSearch.reqId != null)         criteria.add(cb.equal(r.get("reqId"), requestSearch.reqId));
-        if(requestSearch.title != null)         criteria.add(cb.like(r.get("title"), "%" + requestSearch.title + "%"));
-        if(requestSearch.team != null)          criteria.add(cb.equal(r.get("applicant").get("team"), requestSearch.team));
-        if(requestSearch.applicantName != null) criteria.add(cb.like(r.get("applicant").get("name"), requestSearch.applicantName + "%"));
-        if(status != null)                      criteria.add(cb.equal(r.get("status"), status));
-        if(category != null)                    criteria.add(cb.equal(r.get("category"), category));
-        if(division != null)                    criteria.add(cb.equal(r.get("division"), division));
+        if(requestSearch.reqId != null)  criteria.add(cb.equal(r.get("reqId"), requestSearch.reqId));
+        if(requestSearch.title != null)  criteria.add(cb.like(r.get("title"), "%" + requestSearch.title + "%"));
+        if(requestSearch.team != null)   criteria.add(cb.equal(r.get("applicant").get("team"), requestSearch.team));
+        if(requestSearch.name != null)   criteria.add(cb.like(r.get("applicant").get("name"), requestSearch.name + "%"));
+        if(status != null)               criteria.add(cb.equal(r.get("status"), status));
+        if(category != null)             criteria.add(cb.equal(r.get("category"), category));
+        if(division != null)             criteria.add(cb.equal(r.get("division"), division));
 
         return criteria;
     }
