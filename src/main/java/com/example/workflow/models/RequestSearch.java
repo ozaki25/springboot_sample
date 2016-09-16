@@ -5,7 +5,7 @@ import org.springframework.util.StringUtils;
 
 public class RequestSearch {
     public int page;
-    public String reqId;
+    public int year;
     public String title;
     public String team;
     public String name;
@@ -17,7 +17,7 @@ public class RequestSearch {
 
     public RequestSearch(MultiValueMap<String, String> query) {
         String pageString = query.toSingleValueMap().get("page");
-        String reqId = query.toSingleValueMap().get("reqId");
+        String yearString = query.toSingleValueMap().get("year");
         String title = query.toSingleValueMap().get("title");
         String team = query.toSingleValueMap().get("team");
         String name = query.toSingleValueMap().get("name");
@@ -29,7 +29,11 @@ public class RequestSearch {
         } catch(NumberFormatException e) {
             this.page = 0;
         }
-        this.reqId = StringUtils.hasLength(reqId) ? reqId : null;
+        try {
+            this.year = StringUtils.hasLength(yearString) ? Integer.parseInt(yearString) : 0;
+        } catch(NumberFormatException e) {
+            this.year = 0;
+        }
         this.title = StringUtils.hasLength(title) ? title : null;
         this.team = StringUtils.hasLength(team) ? team : null;
         this.name = StringUtils.hasLength(name) ? name : null;

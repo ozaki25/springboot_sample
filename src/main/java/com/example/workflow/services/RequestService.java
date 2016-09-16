@@ -70,7 +70,7 @@ public class RequestService {
         Division division     = requestSearch.divisionId    == null ? null : divisionRepository.findById(requestSearch.divisionId);
 
         List<Predicate> criteria = new ArrayList<Predicate>();
-        if(requestSearch.reqId != null)  criteria.add(cb.equal(r.get("reqId"), requestSearch.reqId));
+        if(requestSearch.year != 0)      criteria.add(cb.like(r.get("reqId"), requestSearch.year + "-%"));
         if(requestSearch.title != null)  criteria.add(cb.like(r.get("title"), "%" + requestSearch.title + "%"));
         if(requestSearch.team != null)   criteria.add(cb.equal(r.get("applicant").get("team"), requestSearch.team));
         if(requestSearch.name != null)   criteria.add(cb.like(r.get("applicant").get("name"), requestSearch.name + "%"));
