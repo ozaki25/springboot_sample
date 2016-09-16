@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface RequestNumberRepository extends JpaRepository<RequestNumber, Long> {
     RequestNumber findByYear(int year);
+    List<RequestNumber> findAll();
 }
