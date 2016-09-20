@@ -18,12 +18,11 @@ public class Request {
     private String reqId;
     private String title;
     private String content;
+    private String workContent;
     @OneToOne(cascade = CascadeType.ALL)
     private Applicant applicant;
     @OneToOne(cascade = CascadeType.ALL)
     private Authorizer authorizer;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Work work;
     @ManyToOne
     private Status status;
     @ManyToOne
@@ -35,13 +34,12 @@ public class Request {
 
     public Request() { };
 
-    public Request(String title, String content, Status status, Applicant applicant, Authorizer authorizer, Work work, Division division) {
+    public Request(String title, String content, Status status, Applicant applicant, Authorizer authorizer, Division division) {
         this.title = title;
         this.content = content;
         this.status = status;
         this.applicant = applicant;
         this.authorizer = authorizer;
-        this.work = work;
         this.division = division;
     }
 
@@ -75,6 +73,14 @@ public class Request {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getWorkContent() {
+        return this.workContent;
+    }
+
+    public void setWorkContent(String workContent) {
+        this.workContent = workContent;
     }
 
     public Status getStatus() {
@@ -117,14 +123,6 @@ public class Request {
         this.authorizer = authorizer;
     }
 
-    public Work getWork() {
-        return this.work;
-    }
-
-    public void setWork(Work work) {
-        this.work = work;
-    }
-
     public List<Document> getDocuments() {
         return this.documents;
     }
@@ -134,7 +132,7 @@ public class Request {
     }
 
     public String toString() {
-        return "{id: " + this.getId() + ", reqId: " + this.getReqId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", division: " + this.getDivisionToString() + ", applicant: " + this.getApplicantToString() + ", authorizer: " + this.getAuthorizerToString() + ", work: " + this.getWorkToString() + ", documents: " + this.documents.size() + "}";
+        return "{id: " + this.getId() + ", reqId: " + this.getReqId() + ", title: " + this.getTitle() + ", content: " + this.getContent() + ", status: " + this.getStatusToString() + ", division: " + this.getDivisionToString() + ", applicant: " + this.getApplicantToString() + ", authorizer: " + this.getAuthorizerToString() + ", documents: " + this.documents.size() + "}";
     }
 
     public static String toString(List<Request> requests) {
@@ -160,9 +158,5 @@ public class Request {
 
     private String getAuthorizerToString() {
         return this.authorizer == null ? "" : this.authorizer.toString();
-    }
-
-    private String getWorkToString() {
-        return this.work == null ? "" : this.work.toString();
     }
 }
