@@ -24,6 +24,8 @@ public class RequestService {
     @Autowired
     RequestNumberRepository requestNumberRepository;
     @Autowired
+    RequestDepartmentRepository requestDepartmentRepository;
+    @Autowired
     ApplicantRepository applicantRepository;
     @Autowired
     AuthorizerRepository authorizerRepository;
@@ -86,6 +88,7 @@ public class RequestService {
         request.setCategory(this.getCategory(request));
         Request r = repository.save(request);
         this.updateDocuments(r, request.getDocuments(), documentRepository.findByRequestId(request.getId()));
+        this.updateRequestDepartment(r.getApplicant().getTeam());
         return r;
     }
 
@@ -135,5 +138,10 @@ public class RequestService {
                 documentRepository.delete(d);
             }
         }
+    }
+
+    private void updateRequestDepartment(String name) {
+        RequestDepartment r = requestDepartmentRepository.findByName(name);
+        if(r == null) requestDepartmentRepository.save(new RequestDepartment(name));
     }
 }
