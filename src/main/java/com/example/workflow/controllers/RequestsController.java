@@ -1,8 +1,8 @@
 package com.example.workflow;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +57,7 @@ public class RequestsController {
 
     @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
     public Request update(Principal principal, @PathVariable Long id, @RequestBody Request request) {
+        if(!request.getUpdatedDate().equals(requestService.findById(id).getUpdatedDate())) throw new IllegalArgumentException("他のユーザによって更新されました。");
         User currentUser =  userRepository.findByUid(principal.getName());
         request.setId(id);
         Request r = requestService.save(request, currentUser);

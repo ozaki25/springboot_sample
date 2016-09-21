@@ -9,6 +9,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -34,6 +35,7 @@ public class Request {
     private List<Document> documents = new ArrayList<Document>();
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "request")
     private List<History> histories = new ArrayList<History>();
+    private Date updatedDate;
 
     @Transient
     private String action;
@@ -143,6 +145,14 @@ public class Request {
 
     public void setHistories(List<History> histories) {
         this.histories = histories;
+    }
+
+    public Date getUpdatedDate() {
+        return this.updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
     }
 
     public String getAction() {

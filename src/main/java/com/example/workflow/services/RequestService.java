@@ -1,8 +1,9 @@
 package com.example.workflow;
 
 import java.lang.Math;
-import java.util.Calendar;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -88,6 +89,7 @@ public class RequestService {
     public Request save(Request request, User user) {
         if(request.getReqId() == null) request.setReqId(this.getReqId(request));
         request.setCategory(this.getCategory(request));
+        request.setUpdatedDate(new Date());
         Request r = repository.save(request);
         this.updateDocuments(r, request.getDocuments(), documentRepository.findByRequestId(request.getId()));
         this.updateRequestDepartment(r.getApplicant().getTeam());
