@@ -91,7 +91,7 @@ public class RequestService {
         Request r = repository.save(request);
         this.updateDocuments(r, request.getDocuments(), documentRepository.findByRequestId(request.getId()));
         this.updateRequestDepartment(r.getApplicant().getTeam());
-        historyRepository.save(new History(user, r, request.getAction()));
+        if(!request.getAction().equals("保存")) historyRepository.save(new History(user, r, request.getAction()));
         return r;
     }
 

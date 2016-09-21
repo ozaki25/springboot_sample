@@ -91,6 +91,14 @@ public class History {
         this.request = request;
     }
 
+    public Date getCreatedDate() {
+        return this.createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
     public String toString() {
         return "{id: " + this.getId() + ", uid: " + this.getUid() + ", name: " + this.getName() + ", team: " + this.getTeam() + "requestId" + this.getRequestIdToString() + "}";
     }
