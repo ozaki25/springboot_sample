@@ -37,6 +37,8 @@ public class RequestService {
     DivisionRepository divisionRepository;
     @Autowired
     DocumentRepository documentRepository;
+    @Autowired
+    HistoryRepository historyRepository;
     @PersistenceContext
     private EntityManager em;
 
@@ -83,12 +85,13 @@ public class RequestService {
         return criteria;
     }
 
-    public Request save(Request request) {
+    public Request save(Request request, User user) {
         if(request.getReqId() == null) request.setReqId(this.getReqId(request));
         request.setCategory(this.getCategory(request));
         Request r = repository.save(request);
         this.updateDocuments(r, request.getDocuments(), documentRepository.findByRequestId(request.getId()));
         this.updateRequestDepartment(r.getApplicant().getTeam());
+        historyRepository.save(new History(user, r, request.getAction()));
         return r;
     }
 

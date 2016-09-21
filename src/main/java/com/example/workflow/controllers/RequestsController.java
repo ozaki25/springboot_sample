@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.ArrayList;
 import org.apache.commons.logging.Log;
@@ -21,6 +22,8 @@ public class RequestsController {
     private RequestService requestService;
     @Autowired
     private DocumentRepository documentRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Request> index(@RequestParam MultiValueMap<String, String> query) {
@@ -45,16 +48,18 @@ public class RequestsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Request create(@RequestBody Request request) {
-        Request r = requestService.save(request);
+    public Request create(Principal principal, @RequestBody Request request) {
+        User currentUser =  userRepository.findByUid(principal.getName());
+        Request r = requestService.save(request, currentUser);
         logger.info(r.toString());
         return r;
     }
 
     @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
-    public Request update(@PathVariable Long id, @RequestBody Request request) {
+    public Request update(Principal principal, @PathVariable Long id, @RequestBody Request request) {
+        User currentUser =  userRepository.findByUid(principal.getName());
         request.setId(id);
-        Request r = requestService.save(request);
+        Request r = requestService.save(request, currentUser);
         logger.info(r.toString());
         return r;
     }

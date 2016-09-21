@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,11 @@ public class Request {
     private Category category;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "request")
     private List<Document> documents = new ArrayList<Document>();
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "request")
+    private List<History> histories = new ArrayList<History>();
+
+    @Transient
+    private String action;
 
     public Request() { };
 
@@ -129,6 +135,22 @@ public class Request {
 
     public void setDocuments(List<Document> documents) {
         this.documents = documents;
+    }
+
+    public List<History> getHistories() {
+        return this.histories;
+    }
+
+    public void setHistories(List<History> histories) {
+        this.histories = histories;
+    }
+
+    public String getAction() {
+        return this.action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 
     public String toString() {
