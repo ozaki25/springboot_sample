@@ -12,6 +12,8 @@ public class RequestSearch {
     public Long statusId;
     public Long categoryId;
     public Long divisionId;
+    public String orderBy;
+    public String orderRule;
 
     public RequestSearch() { };
 
@@ -24,6 +26,7 @@ public class RequestSearch {
         String statusIdString = query.toSingleValueMap().get("statusId");
         String categoryIdString = query.toSingleValueMap().get("categoryId");
         String divisionIdString = query.toSingleValueMap().get("divisionId");
+        String order = query.toSingleValueMap().get("order");
         try {
             this.page = StringUtils.hasLength(pageString) ? Integer.parseInt(pageString) : 0;
         } catch(NumberFormatException e) {
@@ -51,6 +54,14 @@ public class RequestSearch {
             this.divisionId = Long.parseLong(divisionIdString);
         } catch(NumberFormatException e) {
             this.divisionId = null;
+        }
+        if(StringUtils.hasLength(order)) {
+            String[] orderArray = order.split("\\.", 0);
+            this.orderBy = orderArray[0];
+            this.orderRule = orderArray.length == 2 && (orderArray[1].equals("asc") || orderArray[1].equals("desc")) ? orderArray[1] : "asc";
+        } else {
+            this.orderBy = "id";
+            this.orderRule = "desc";
         }
     }
 }

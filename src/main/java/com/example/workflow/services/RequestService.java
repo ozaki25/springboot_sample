@@ -53,7 +53,13 @@ public class RequestService {
         Root<Request> r = cq.from(Request.class);
         cq.select(r);
         List<Predicate> criteria = this.setCriteria(cb, r, requestSearch);
-        cq.where(cb.and(criteria.toArray(new Predicate[] { }))).orderBy(cb.desc(r.get("id")));
+        cq.where(cb.and(criteria.toArray(new Predicate[] { })));
+        try {
+            if(requestSearch.orderRule.equals("asc")) cq.orderBy(cb.asc(r.get(requestSearch.orderBy)));
+            else cq.orderBy(cb.desc(r.get(requestSearch.orderBy)));
+        } catch(IllegalArgumentException e) {
+            cq.orderBy(cb.desc(r.get("id")));
+        }
         return requestSearch.page == 0 ?
             em.createQuery(cq).getResultList() :
             em.createQuery(cq).setFirstResult((requestSearch.page - 1) * PAGE_SIZE).setMaxResults(PAGE_SIZE).getResultList();
