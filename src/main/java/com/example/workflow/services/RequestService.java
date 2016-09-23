@@ -92,14 +92,14 @@ public class RequestService {
         return criteria;
     }
 
-    public Request save(Request request, User user) {
+    public Request save(Request request, String uid, String name, String team) {
         if(request.getReqId() == null) request.setReqId(this.getReqId(request));
         request.setCategory(this.getCategory(request));
         request.setUpdatedDate(new Date());
         Request r = repository.save(request);
         this.updateDocuments(r, request.getDocuments(), documentRepository.findByRequestId(request.getId()));
         this.updateRequestDepartment(r.getApplicant().getTeam());
-        if(!request.getAction().equals("保存")) historyRepository.save(new History(user, r, request.getAction()));
+        historyRepository.save(new History(uid, name, team, r, request.getAction()));
         return r;
     }
 

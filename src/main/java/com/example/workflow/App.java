@@ -1,6 +1,7 @@
 package com.example.workflow;
 
 import java.security.Principal;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,8 +21,12 @@ public class App {
     }
 
     @RequestMapping("/current-user")
-    public @ResponseBody User home(Principal principal) {
-        return userRepository.findByUid(principal.getName());
+    public @ResponseBody User home(HttpServletRequest request, Principal principal) {
+        User user = userRepository.findByUid(principal.getName());
+        request.getSession().setAttribute("uid", user.getUid());
+        request.getSession().setAttribute("name", user.getName());
+        request.getSession().setAttribute("team", user.getTeam());
+        return user;
     }
 
     public static void main(String[] args) throws Exception {

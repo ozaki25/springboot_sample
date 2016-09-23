@@ -1,8 +1,8 @@
 package com.example.workflow;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,19 +48,23 @@ public class RequestsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Request create(Principal principal, @RequestBody Request request) {
-        User currentUser =  userRepository.findByUid(principal.getName());
-        Request r = requestService.save(request, currentUser);
+    public Request create(HttpServletRequest httpRequest, @RequestBody Request request) {
+        String uid = httpRequest.getSession().getAttribute("uid").toString();
+        String name = httpRequest.getSession().getAttribute("name").toString();
+        String team = httpRequest.getSession().getAttribute("team").toString();
+        Request r = requestService.save(request, uid, name, team);
         logger.info(r.toString());
         return r;
     }
 
     @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
-    public Request update(Principal principal, @PathVariable Long id, @RequestBody Request request) {
+    public Request update(HttpServletRequest httpRequest, @PathVariable Long id, @RequestBody Request request) {
         if(!request.getUpdatedDate().equals(requestService.findById(id).getUpdatedDate())) throw new IllegalArgumentException("他のユーザによって更新されました。");
-        User currentUser =  userRepository.findByUid(principal.getName());
+        String uid = httpRequest.getSession().getAttribute("uid").toString();
+        String name = httpRequest.getSession().getAttribute("name").toString();
+        String team = httpRequest.getSession().getAttribute("team").toString();
         request.setId(id);
-        Request r = requestService.save(request, currentUser);
+        Request r = requestService.save(request, uid, name, team);
         logger.info(r.toString());
         return r;
     }
