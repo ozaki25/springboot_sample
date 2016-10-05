@@ -1,9 +1,6 @@
 package com.example.workflow;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,17 +10,16 @@ import javax.persistence.ManyToOne;
 import java.util.List;
 
 @Entity
-@JsonIgnoreProperties({"file"})
 public class Document {
     @Id
     @GeneratedValue
     private Long id;
     private String filename;
+    @JsonIgnore
     @Lob
     private byte[] file;
+    @JsonIgnore
     @ManyToOne
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
     private Request request;
 
     public Document() { };

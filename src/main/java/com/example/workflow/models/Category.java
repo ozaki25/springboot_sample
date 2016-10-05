@@ -1,6 +1,6 @@
 package com.example.workflow;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +9,6 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonIgnoreProperties({"divisions"})
 @Entity
 public class Category {
     @Id
@@ -17,8 +16,10 @@ public class Category {
     private Long id;
     private String name;
     private String code;
+    @JsonIgnore
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "category")
     private List<Division> divisions = new ArrayList<Division>();
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Receptnist> receptnists = new ArrayList<Receptnist>();
 

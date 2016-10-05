@@ -1,6 +1,5 @@
 package com.example.workflow;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +7,6 @@ import javax.persistence.Id;
 import java.util.List;
 
 @Entity
-@JsonIgnoreProperties({"id"})
 public class User {
     @Id
     @GeneratedValue

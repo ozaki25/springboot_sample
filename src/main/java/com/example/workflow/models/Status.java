@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ public class Status {
     private Long id;
     private int code;
     private String name;
+    @JsonIgnore
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "status")
     private List<Request> requests;
 

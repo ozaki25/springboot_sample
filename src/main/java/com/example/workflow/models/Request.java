@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +34,7 @@ public class Request {
     private Category category;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "request")
     private List<Document> documents = new ArrayList<Document>();
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "request")
     private List<History> histories = new ArrayList<History>();
     private Date updatedDate;

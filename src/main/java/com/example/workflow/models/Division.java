@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +17,9 @@ public class Division {
     private Long id;
     private String name;
     private String code;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private Category category;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "division")
     private List<Request> requests = new ArrayList<Request>();
 
