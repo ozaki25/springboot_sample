@@ -14,12 +14,17 @@ public class LoginController {
     private UserRepository userRepository;
     @Autowired
     private StatusRepository statusRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private DivisionRepository divisionRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
         List<User> users = userRepository.findAll();
         if(users.size() == 0)  users = addDefaultUser();
         if(statusRepository.findAll().size() == 0) addDefaultStatus();
+        if(categoryRepository.findAll().size() == 0) addDefaultCategory();
         model.addAttribute("users", users);
         return "login";
     }
@@ -50,6 +55,27 @@ public class LoginController {
             Status status = new Status(i, name);
             statusRepository.save(status);
             i++;
+        }
+    }
+
+    private void addDefaultCategory() {
+        Category[] categories = {
+            new Category("カテゴリ001", "001"),
+            new Category("カテゴリ002", "002"),
+            new Category("カテゴリ003", "003"),
+            new Category("カテゴリ004", "004"),
+            new Category("カテゴリ005", "005"),
+        };
+        for(Category category : categories) {
+            Category c = categoryRepository.save(category);
+            Division[] divisions = {
+                new Division("種別" + c.getCode() + "001", c.getCode() + "001", c),
+                new Division("種別" + c.getCode() + "002", c.getCode() + "002", c),
+                new Division("種別" + c.getCode() + "003", c.getCode() + "003", c),
+                new Division("種別" + c.getCode() + "004", c.getCode() + "004", c),
+                new Division("種別" + c.getCode() + "005", c.getCode() + "005", c),
+            };
+            for(Division division : divisions) divisionRepository.save(division);
         }
     }
 }
