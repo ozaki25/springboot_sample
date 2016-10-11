@@ -44,5 +44,10 @@ http://projects.spring.io/spring-boot/#quick-start
         }
     }
     ```
-* mvn spring-boot:run
-  * アプリが起動するのでhttp://localhost:8080にアクセスするとHello Worldが表示される
+* 開発時
+  * mvn spring-boot:run
+    * アプリが起動するのでhttp://localhost:8080にアクセスするとHello Worldが表示される
+
+* 本番時
+  * mvn package
+  * java -jar target/springboot_sample-1.0.0-SNAPSHOT.jar

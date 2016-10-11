@@ -16,6 +16,10 @@ public class App {
     @Autowired
     private UserRepository userRepository;
 
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(App.class, args);
+    }
+
     @RequestMapping("/")
     public String home() {
         return "index";
@@ -28,10 +32,6 @@ public class App {
         request.getSession().setAttribute("name", user.getName());
         request.getSession().setAttribute("team", user.getTeam());
         return user;
-    }
-
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(App.class, args);
     }
 
     protected static void logging(Log logger, HttpServletRequest httpRequest) {
