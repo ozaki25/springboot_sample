@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,39 +19,36 @@ public class StatusesController {
     private StatusRepository repository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Status> index() {
-        List<Status> statuses = repository.findAll();
-        logger.info(Status.toString(statuses));
-        return statuses;
+    public List<Status> index(HttpServletRequest httpRequest) {
+        App.logging(logger, httpRequest);
+        return repository.findAll();
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Status show(@PathVariable Long id) {
-        Status s = repository.findById(id);
-        logger.info(s.toString());
-        return s;
+    public Status show(HttpServletRequest httpRequest, @PathVariable Long id) {
+        App.logging(logger, httpRequest);
+        return repository.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Status create(@RequestBody Status status) {
-        Status s = repository.save(status);
-        logger.info(s.toString());
-        return s;
+    public Status create(HttpServletRequest httpRequest, @RequestBody Status status) {
+        App.logging(logger, httpRequest);
+        logger.info(status.toString());
+        return repository.save(status);
     }
 
     @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
-    public Status update(@PathVariable Long id, @RequestBody Status status) {
+    public Status update(HttpServletRequest httpRequest, @PathVariable Long id, @RequestBody Status status) {
+        App.logging(logger, httpRequest);
+        logger.info(status.toString());
         status.setId(id);
-        Status s = repository.save(status);
-        logger.info(s.toString());
-        return s;
+        return repository.save(status);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public Status delete(@PathVariable Long id){
-        Status s = repository.findById(id);
-        logger.info(s.toString());
+    public Long delete(HttpServletRequest httpRequest, @PathVariable Long id){
+        App.logging(logger, httpRequest);
         repository.delete(id);
-        return s;
+        return id;
     }
 }

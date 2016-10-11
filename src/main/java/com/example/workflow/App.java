@@ -2,6 +2,7 @@ package com.example.workflow;
 
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,5 +32,19 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(App.class, args);
+    }
+
+    protected static void logging(Log logger, HttpServletRequest httpRequest) {
+        Object uid = httpRequest.getSession().getAttribute("uid");
+        String method = "[" + httpRequest.getMethod() + "]";
+        String path = httpRequest.getRequestURI();
+        String query = httpRequest.getQueryString();
+
+        String logText = "";
+        logText += method;
+        logText += path;
+        if(query != null) logText += "?" + query;
+        logText += ", userId => " + uid.toString();
+        logger.info(logText);
     }
 }

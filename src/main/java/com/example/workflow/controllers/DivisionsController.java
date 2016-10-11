@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,40 +22,36 @@ public class DivisionsController {
     private CategoryRepository categoryRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Division> divisions(@PathVariable Long categoryId) {
-        Category c = categoryRepository.findById(categoryId);
-        List<Division> divisions = c.getDivisions();
-        logger.info(Division.toString(divisions));
-        return divisions;
+    public List<Division> divisions(HttpServletRequest httpRequest, @PathVariable Long categoryId) {
+        App.logging(logger, httpRequest);
+        return categoryRepository.findById(categoryId).getDivisions();
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Division show(@PathVariable Long id) {
-        Division d = repository.findById(id);
-        logger.info(d.toString());
-        return d;
+    public Division show(HttpServletRequest httpRequest, @PathVariable Long id) {
+        App.logging(logger, httpRequest);
+        return repository.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Division create(@RequestBody Division division) {
-        Division d = repository.save(division);
-        logger.info(d.toString());
-        return d;
+    public Division create(HttpServletRequest httpRequest, @RequestBody Division division) {
+        App.logging(logger, httpRequest);
+        logger.info(division.toString());
+        return repository.save(division);
     }
 
     @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
-    public Division update(@PathVariable Long id, @RequestBody Division division) {
+    public Division update(HttpServletRequest httpRequest, @PathVariable Long id, @RequestBody Division division) {
+        App.logging(logger, httpRequest);
+        logger.info(division.toString());
         division.setId(id);
-        Division d = repository.save(division);
-        logger.info(d.toString());
-        return d;
+        return repository.save(division);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public Division delete(@PathVariable Long id){
-        Division d = repository.findById(id);
-        logger.info(d.toString());
+    public Long delete(HttpServletRequest httpRequest, @PathVariable Long id){
+        App.logging(logger, httpRequest);
         repository.delete(id);
-        return d;
+        return id;
     }
 }

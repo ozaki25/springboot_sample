@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,46 +23,38 @@ public class ApplicantsController {
     private ApplicantService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Applicant> index(@RequestParam MultiValueMap<String, String> query) {
-        logger.info("query: " + query);
+    public List<Applicant> index(HttpServletRequest httpRequest, @RequestParam MultiValueMap<String, String> query) {
+        App.logging(logger, httpRequest);
         String param = query.toSingleValueMap().get("uniq");
-        List<Applicant> applicants = new ArrayList<Applicant>();
-        if(StringUtils.hasLength(param)) {
-            applicants = service.findDistinct(param);
-        } else {
-            applicants = service.findAll();
-            logger.info(Applicant.toString(applicants));
-        }
-        return applicants;
+        return StringUtils.hasLength(param) ? service.findDistinct(param) : service.findAll();
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Applicant show(@PathVariable Long id) {
-        Applicant u = service.findById(id);
-        logger.info(u.toString());
-        return u;
+    public Applicant show(HttpServletRequest httpRequest, @PathVariable Long id) {
+        App.logging(logger, httpRequest);
+        return service.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Applicant create(@RequestBody Applicant applicant) {
-        Applicant u = service.save(applicant);
-        logger.info(u.toString());
-        return u;
+    public Applicant create(HttpServletRequest httpRequest, @RequestBody Applicant applicant) {
+        App.logging(logger, httpRequest);
+        logger.info(applicant.toString());
+        return service.save(applicant);
+
     }
 
     @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
-    public Applicant update(@PathVariable Long id, @RequestBody Applicant applicant) {
+    public Applicant update(HttpServletRequest httpRequest, @PathVariable Long id, @RequestBody Applicant applicant) {
+        App.logging(logger, httpRequest);
+        logger.info(applicant.toString());
         applicant.setId(id);
-        Applicant u = service.save(applicant);
-        logger.info(u.toString());
-        return u;
+        return service.save(applicant);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public Applicant delete(@PathVariable Long id){
-        Applicant u = service.findById(id);
-        logger.info(u.toString());
+    public Long delete(HttpServletRequest httpRequest, @PathVariable Long id){
+        App.logging(logger, httpRequest);
         service.delete(id);
-        return u;
+        return id;
     }
 }

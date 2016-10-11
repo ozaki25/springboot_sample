@@ -26,54 +26,52 @@ public class RequestsController {
     private UserRepository userRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Request> index(@RequestParam MultiValueMap<String, String> query) {
+    public List<Request> index(HttpServletRequest httpRequest, @RequestParam MultiValueMap<String, String> query) {
+        App.logging(logger, httpRequest);
         RequestSearch requestSearch = new RequestSearch(query);
-        List<Request> requests = requestService.search(requestSearch);
-        logger.info(Request.toString(requests));
-        return requests;
+        return requestService.search(requestSearch);
     }
 
     @RequestMapping(value = "page/{page}", method = RequestMethod.GET)
-    public Page page(@PathVariable int page, @RequestParam MultiValueMap<String, String> query) {
+    public Page page(HttpServletRequest httpRequest, @PathVariable int page, @RequestParam MultiValueMap<String, String> query) {
+        App.logging(logger, httpRequest);
         RequestSearch requestSearch = new RequestSearch(query);
         int totalPage = requestService.getTotalPage(requestSearch);
         return new Page(page, totalPage);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Request show(@PathVariable Long id) {
-        Request r = requestService.findById(id);
-        logger.info(r.toString());
-        return r;
+    public Request show(HttpServletRequest httpRequest, @PathVariable Long id) {
+        App.logging(logger, httpRequest);
+        return requestService.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public Request create(HttpServletRequest httpRequest, @RequestBody Request request) {
+        App.logging(logger, httpRequest);
+        logger.info(request.toString());
         String uid = httpRequest.getSession().getAttribute("uid").toString();
         String name = httpRequest.getSession().getAttribute("name").toString();
         String team = httpRequest.getSession().getAttribute("team").toString();
-        Request r = requestService.save(request, uid, name, team);
-        logger.info(r.toString());
-        return r;
+        return requestService.save(request, uid, name, team);
     }
 
     @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
     public Request update(HttpServletRequest httpRequest, @PathVariable Long id, @RequestBody Request request) {
+        App.logging(logger, httpRequest);
+        logger.info(request.toString());
         if(!request.getUpdatedDate().equals(requestService.findById(id).getUpdatedDate())) throw new IllegalArgumentException("他のユーザによって更新されました。");
         String uid = httpRequest.getSession().getAttribute("uid").toString();
         String name = httpRequest.getSession().getAttribute("name").toString();
         String team = httpRequest.getSession().getAttribute("team").toString();
         request.setId(id);
-        Request r = requestService.save(request, uid, name, team);
-        logger.info(r.toString());
-        return r;
+        return requestService.save(request, uid, name, team);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public Request delete(@PathVariable Long id){
-        Request r = requestService.findById(id);
-        logger.info(r.toString());
+    public Long delete(HttpServletRequest httpRequest, @PathVariable Long id){
+        App.logging(logger, httpRequest);
         requestService.delete(id);
-        return r;
+        return id;
     }
 }

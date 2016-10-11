@@ -1,6 +1,7 @@
 package com.example.workflow;
 
 import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,9 @@ public class DocumentsController {
     private RequestRepository requestRepository;
 
     @RequestMapping(value = "{id}", method=RequestMethod.GET)
-    public ResponseEntity<byte[]> show(@PathVariable Long id) throws IOException {
+    public ResponseEntity<byte[]> show(HttpServletRequest httpRequest, @PathVariable Long id) throws IOException {
+        App.logging(logger, httpRequest);
         Document d = repository.findById(id);
-        logger.info(d.toString());
 
         HttpHeaders header = new HttpHeaders();
         header.add("Content-Type", "application/force-download; charset=UTF-8");
@@ -36,19 +37,18 @@ public class DocumentsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Document create(@RequestParam("request") String requestId, @RequestParam("file") MultipartFile file) throws IOException {
+    public Document create(HttpServletRequest httpRequest, @RequestParam("request") String requestId, @RequestParam("file") MultipartFile file) throws IOException {
+        App.logging(logger, httpRequest);
         Request request = requestId.equals("") ? null : requestRepository.findById(Long.parseLong(requestId));
         Document document = new Document(file.getOriginalFilename(), file.getBytes(), request);
-        Document d = repository.save(document);
-        logger.info(d.toString());
-        return d;
+        logger.info(document.toString());
+        return repository.save(document);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public Document delete(@PathVariable Long id){
-        Document d = repository.findById(id);
-        logger.info(d.toString());
+    public Long delete(HttpServletRequest httpRequest, @PathVariable Long id){
+        App.logging(logger, httpRequest);
         repository.delete(id);
-        return d;
+        return id;
     }
 }

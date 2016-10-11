@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,40 +22,37 @@ public class HistoriesController {
     private RequestRepository requestRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<History> index(@PathVariable Long requestId) {
-        Request r = requestRepository.findById(requestId);
-        List<History> histories = r.getHistories();
-        logger.info(History.toString(histories));
-        return histories;
+    public List<History> index(HttpServletRequest httpRequest, @PathVariable Long requestId) {
+        App.logging(logger, httpRequest);
+        return requestRepository.findById(requestId).getHistories();
+
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public History show(@PathVariable Long id) {
-        History h = repository.findById(id);
-        logger.info(h.toString());
-        return h;
+    public History show(HttpServletRequest httpRequest, @PathVariable Long id) {
+        App.logging(logger, httpRequest);
+        return repository.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public History create(@RequestBody History history) {
-        History h = repository.save(history);
-        logger.info(h.toString());
-        return h;
+    public History create(HttpServletRequest httpRequest, @RequestBody History history) {
+        App.logging(logger, httpRequest);
+        logger.info(history.toString());
+        return repository.save(history);
     }
 
     @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
-    public History update(@PathVariable Long id, @RequestBody History history) {
+    public History update(HttpServletRequest httpRequest, @PathVariable Long id, @RequestBody History history) {
+        App.logging(logger, httpRequest);
+        logger.info(history.toString());
         history.setId(id);
-        History h = repository.save(history);
-        logger.info(h.toString());
-        return h;
+        return repository.save(history);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public History delete(@PathVariable Long id){
-        History h = repository.findById(id);
-        logger.info(h.toString());
+    public Long delete(HttpServletRequest httpRequest, @PathVariable Long id){
+        App.logging(logger, httpRequest);
         repository.delete(id);
-        return h;
+        return id;
     }
 }

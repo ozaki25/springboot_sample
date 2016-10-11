@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,57 +22,43 @@ public class UsersController {
     private UserRepository repository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<User> index(@RequestParam MultiValueMap<String, String> query) {
-        logger.info("query: " + query);
+    public List<User> index(HttpServletRequest httpRequest, @RequestParam MultiValueMap<String, String> query) {
+        App.logging(logger, httpRequest);
         String team = query.toSingleValueMap().get("team");
         String jobLevelLteString = query.toSingleValueMap().get("jobLevel[lte]");
         Integer jobLevelLte = jobLevelLteString == null ? null : Integer.parseInt(jobLevelLteString);
 
-        List<User> users = new ArrayList<User>();
-        if(team != null && jobLevelLte != null) {
-            logger.info("findByTeamAndJobLevelLessThanEqual");
-            users = repository.findByTeamAndJobLevelLessThanEqual(team, jobLevelLte);
-        } else if(team != null) {
-            logger.info("findByTeam");
-            users = repository.findByTeam(team);
-        } else if(jobLevelLte != null) {
-            logger.info("findByJobLevelLessThanEqual");
-            users = repository.findByJobLevelLessThanEqual(jobLevelLte);
-        } else {
-            logger.info("findAll");
-            users = repository.findAll();
-        }
-        logger.info(User.toString(users));
-        return users;
+        return (team != null && jobLevelLte != null) ? repository.findByTeamAndJobLevelLessThanEqual(team, jobLevelLte) :
+               (team != null)                        ? repository.findByTeam(team) :
+               (jobLevelLte != null)                 ? repository.findByJobLevelLessThanEqual(jobLevelLte) :
+                                                       repository.findAll();
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public User show(@PathVariable Long id) {
-        User u = repository.findById(id);
-        logger.info(u.toString());
-        return u;
+    public User show(HttpServletRequest httpRequest, @PathVariable Long id) {
+        App.logging(logger, httpRequest);
+        return repository.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public User create(@RequestBody User user) {
-        User u = repository.save(user);
-        logger.info(u.toString());
-        return u;
+    public User create(HttpServletRequest httpRequest, @RequestBody User user) {
+        App.logging(logger, httpRequest);
+        logger.info(user.toString());
+        return repository.save(user);
     }
 
     @RequestMapping(value = "{id}", method = { RequestMethod.PATCH, RequestMethod.PUT })
-    public User update(@PathVariable Long id, @RequestBody User user) {
+    public User update(HttpServletRequest httpRequest, @PathVariable Long id, @RequestBody User user) {
+        App.logging(logger, httpRequest);
+        logger.info(user.toString());
         user.setId(id);
-        User u = repository.save(user);
-        logger.info(u.toString());
-        return u;
+        return repository.save(user);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public User delete(@PathVariable Long id){
-        User u = repository.findById(id);
-        logger.info(u.toString());
+    public Long delete(HttpServletRequest httpRequest, @PathVariable Long id){
+        App.logging(logger, httpRequest);
         repository.delete(id);
-        return u;
+        return id;
     }
 }
